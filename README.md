@@ -1,5 +1,6 @@
 TEST: Verify I can push a change from local repo to Github
 TEST: Jessica's push
+TEST: Steven's push change from local repo
 
 # spring16project
 This is the initial dump for the cst316 spring 2016 project. It is a slightly modified version of the Memoranda project from memoranda.sf.net
