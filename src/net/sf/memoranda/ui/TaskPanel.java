@@ -146,7 +146,7 @@ public class TaskPanel extends JPanel {
         subTaskB.setToolTipText(Local.getString("Add subtask"));
         subTaskB.setMinimumSize(new Dimension(24, 24));
         subTaskB.setMaximumSize(new Dimension(24, 24));
-        subTaskB.setEnabled(true);
+        subTaskB.setEnabled(false);
         subTaskB.setIcon(
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_new_sub.png")));
 
