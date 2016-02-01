@@ -239,7 +239,7 @@ public class EditorPanel extends JPanel {
 		pasteB.setMinimumSize(new Dimension(24, 24));
 		pasteB.setPreferredSize(new Dimension(24, 24));
 		pasteB.setRequestFocusEnabled(false);
-		pasteB.setToolTipText(Local.getString("paste"));
+		pasteB.setToolTipText(Local.getString("Paste"));
 		pasteB.setBorderPainted(false);
 		pasteB.setFocusable(false);
 		pasteB.setText("");
@@ -381,7 +381,7 @@ public class EditorPanel extends JPanel {
 		css = css.replaceAll("%MONO_FONT%", MONO_FONT.length() > 0 ? "\""+MONO_FONT+"\""
 				: "monospaced");
 		css = css.replaceAll("%BASE_FONT_SIZE%",
-				BASE_FONT_SIZE.length() > 0 ? BASE_FONT_SIZE : "16");		
+				BASE_FONT_SIZE.length() > 0 ? BASE_FONT_SIZE : "16");
 		editor.setStyleSheet(new StringReader(css));
 		String usercss = (String) Configuration.get("USER_CSS");
 		if (usercss.length() > 0)
