@@ -46,7 +46,7 @@ public class ElementDialog extends JDialog {
   GridBagConstraints gbc;
 
   public ElementDialog(Frame frame) {
-    super(frame, Local.getString("Object properties"), true);
+   // super(frame, Local.getString("Object properties"), true);
     try {
       jbInit();
       pack();
@@ -57,8 +57,8 @@ public class ElementDialog extends JDialog {
   }
 
   public ElementDialog() {
-    this(null);
-  }
+   this(null);
+ }
 
 
   void jbInit() throws Exception {
@@ -66,7 +66,7 @@ public class ElementDialog extends JDialog {
 	headerPanel.setBackground(Color.WHITE);
 	header.setFont(new java.awt.Font("Dialog", 0, 20));
 	header.setForeground(new Color(0, 0, 124));
-	header.setText(Local.getString("Object properties"));
+	//header.setText(Local.getString("Object properties"));
 	header.setIcon(new ImageIcon(
 		net.sf.memoranda.ui.htmleditor.ElementDialog.class.getResource(
 		"resources/icons/textbig.png")));
