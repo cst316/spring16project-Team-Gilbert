@@ -46,6 +46,10 @@ public class PreferencesDialog extends JDialog {
 	ButtonGroup lfGroup = new ButtonGroup();
 
 	JRadioButton lfSystemRB = new JRadioButton();
+	
+	// Added another button for Look and Feel
+	// Ricky Lind 2/1/2016
+	JRadioButton lfAddedRB = new JRadioButton();
 
 	JRadioButton lfJavaRB = new JRadioButton();
 
@@ -151,12 +155,12 @@ public class PreferencesDialog extends JDialog {
 		this(null);
 	}
 
+	/****************** Start Sound Tab ****************/
 	void jbInit() throws Exception {
 		titledBorder1 = new TitledBorder(BorderFactory.createEtchedBorder(
 				Color.white, new Color(156, 156, 158)), Local
 				.getString("Sound"));
 		this.setResizable(false);
-		// Build Tab1
 		jLabel1.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel1.setText(Local.getString("Window minimize action:"));
 		gbc = new GridBagConstraints();
@@ -200,6 +204,9 @@ public class PreferencesDialog extends JDialog {
 				soundCustomRB_actionPerformed(e);
 			}
 		});
+		/***************** End Sound Tab ****************/	
+		
+		/*************** Start General Tab **************/		
 		jPanel2.setLayout(borderLayout2);
 		soundPanel.add(jPanel2, BorderLayout.CENTER);
 		jPanel2.add(jPanel1, BorderLayout.NORTH);
@@ -286,25 +293,67 @@ public class PreferencesDialog extends JDialog {
 		gbc.anchor = GridBagConstraints.EAST;
 		GeneralPanel.add(jLabel3, gbc);
 
+		// Look and Feel 1
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 4;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
+		// Added new button, gave it a label, fixed button so that
+		// if it is selected it will gray out the Custom L&F input
+		// box, fixed lfGroup so only one button can be selected at 
+		// a time.
+		// Ricky Lind 2/1/2016
+		GeneralPanel.add(lfAddedRB, gbc);
+		lfGroup.add(lfAddedRB);
+		lfAddedRB.setText(Local.getString("Look and Feel 1"));
+		lfAddedRB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lfAddedRB_actionPerformed(e);
+			}
+		});
 
+		// Look and Feel 2
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 5;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
+		// Added new button, gave it a label, fixed button so that
+		// if it is selected it will gray out the Custom L&F input
+		// box, fixed lfGroup so only one button can be selected at 
+		// a time.
+		// Ricky Lind 2/1/2016
 		GeneralPanel.add(lfSystemRB, gbc);
+		lfGroup.add(lfSystemRB);
+		lfSystemRB.setText(Local.getString("Look and Feel 2"));
+		lfSystemRB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lfSystemRB_actionPerformed(e);
+			}
+		});
 
+		// Look and Feel 3
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 6;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
+		// Added new button, gave it a label, fixed button so that
+		// if it is selected it will gray out the Custom L&F input
+		// box, fixed lfGroup so only one button can be selected at 
+		// a time.
+		// Ricky Lind 2/1/2016
 		GeneralPanel.add(lfJavaRB, gbc);
+		lfGroup.add(lfJavaRB);
+		lfJavaRB.setText(Local.getString("Look and Feel 3"));
+		lfJavaRB.addActionListener(new java.awt.event.ActionListener() {
+		   public void actionPerformed(ActionEvent e) {
+		       lfJavaRB_actionPerformed(e);
+		   }
+		});
+		
+		// Custom Button
 		lfGroup.add(lfCustomRB);
 		lfCustomRB.setText(Local.getString("Custom"));
 		lfCustomRB.addActionListener(new java.awt.event.ActionListener() {
@@ -312,6 +361,8 @@ public class PreferencesDialog extends JDialog {
 				lfCustomRB_actionPerformed(e);
 			}
 		});
+		
+		// L&F Class Name
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 7;
@@ -417,7 +468,9 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 10, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(askConfirmChB, gbc);
-
+		
+		/*************** End General Tab **************/	
+		
 		// Build Tab2
 		rstPanelBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		resourceTypePanel.setBorder(rstPanelBorder);
@@ -766,6 +819,13 @@ public class PreferencesDialog extends JDialog {
 	}
 
 	void lfSystemRB_actionPerformed(ActionEvent e) {
+		this.enableCustomLF(false);
+	}
+	
+	// Added the below statement to gray out the Custom
+	// L&F text box when CustomeRB is not selected
+	// Ricky Lind 2/1/2016
+	void lfAddedRB_actionPerformed(ActionEvent e) {
 		this.enableCustomLF(false);
 	}
 
