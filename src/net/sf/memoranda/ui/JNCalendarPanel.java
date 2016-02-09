@@ -1,3 +1,12 @@
+/*
+File:JNCalendarPanel.java	
+Author:	Steven Nesmith
+Date:	2/7/2016
+
+Description: I added a drop down box to pick weekly view or monthly view
+for calendar. I have not added implementation of the drop down box yet, so
+calendar will not change.
+*/
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
@@ -42,7 +51,7 @@ import net.sf.memoranda.util.Local;
 
 /*$Id: JNCalendarPanel.java,v 1.9 2004/04/05 10:05:44 alexeya Exp $*/
 public class JNCalendarPanel extends JPanel {
-
+  String pickcalendar[] = {"Monthly", "Weekly"};
   CalendarDate _date = CurrentDate.get();
   JToolBar navigationBar = new JToolBar();
   JPanel mntyPanel = new JPanel(new BorderLayout());
@@ -54,8 +63,10 @@ public class JNCalendarPanel extends JPanel {
   JPanel dayBackBPanel = new JPanel();
   JButton dayBackB = new JButton();
   JComboBox monthsCB = new JComboBox(Local.getMonthNames());
+  JComboBox calendars = new JComboBox(pickcalendar);
   BorderLayout borderLayout4 = new BorderLayout();
   JNCalendar jnCalendar = new JNCalendar(CurrentDate.get());
+  JNCalendarWeek jnCalendarWeek = new JNCalendarWeek(CurrentDate.get());
   JPanel jnCalendarPanel = new JPanel();
   BorderLayout borderLayout5 = new BorderLayout();
   JSpinner yearSpin = new JSpinner(new SpinnerNumberModel(jnCalendar.get().getYear(), 1980, 2999, 1));
@@ -112,6 +123,9 @@ public class JNCalendarPanel extends JPanel {
     monthsCB.setRequestFocusEnabled(false);
     monthsCB.setMaximumRowCount(12);
     monthsCB.setPreferredSize(new Dimension(50 , 20));
+    calendars.setRequestFocusEnabled(false);
+    calendars.setMaximumRowCount(2);
+    calendars.setPreferredSize(new Dimension(50 , 20));
     border1 = BorderFactory.createEmptyBorder(0,0,5,0);
     border2 = BorderFactory.createEmptyBorder();
     this.setLayout(new BorderLayout());
@@ -169,6 +183,9 @@ public class JNCalendarPanel extends JPanel {
     jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 10));
     jnCalendar.setGridColor(Color.lightGray);
+    jnCalendarWeek.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
+    jnCalendarWeek.setFont(new java.awt.Font("Dialog", 0, 10));
+    jnCalendarWeek.setGridColor(Color.lightGray);
     jnCalendarPanel.setLayout(borderLayout5);
     todayBPanel.setMinimumSize(new Dimension(68, 24));
     todayBPanel.setOpaque(false);
@@ -183,6 +200,7 @@ public class JNCalendarPanel extends JPanel {
     dayForwardBPanel.add(dayForwardB, null);
     this.add(mntyPanel,  BorderLayout.SOUTH);
     mntyPanel.add(monthsCB, BorderLayout.CENTER);
+    mntyPanel.add(calendars, BorderLayout.NORTH);
     mntyPanel.add(yearSpin,  BorderLayout.EAST);
     this.add(jnCalendarPanel,  BorderLayout.CENTER);
     jnCalendar.getTableHeader().setPreferredSize(new Dimension(200, 15));
@@ -200,12 +218,19 @@ public class JNCalendarPanel extends JPanel {
       }
     });*/
     monthsCB.setFont(new java.awt.Font("Dialog", 0, 11));
+    calendars.setFont(new java.awt.Font("Dialog", 0, 11));
 
     monthsCB.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(ActionEvent e) {
         monthsCB_actionPerformed(e);
       }
     });
+    
+    calendars.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          calendars_actionPerformed(e);
+        }
+      });
 
     yearSpin.addChangeListener(new ChangeListener() {
       public void stateChanged(ChangeEvent e) {
@@ -257,6 +282,14 @@ public class JNCalendarPanel extends JPanel {
     yearSpin.setValue(new Integer(_date.getYear()));
     ignoreChange = false;
   }
+  
+  private void refreshViewWeek() {
+	    ignoreChange = true;
+	    jnCalendarWeek.set(_date);
+	    calendars.setSelectedIndex(new Integer(_date.getMonth()));
+	    yearSpin.setValue(new Integer(_date.getYear()));
+	    ignoreChange = false;
+	  }
 
   void monthsCB_actionPerformed(ActionEvent e) {
     if (ignoreChange) return;
@@ -264,6 +297,28 @@ public class JNCalendarPanel extends JPanel {
     jnCalendar.set(_date);
     notifyListeners();
   }
+  
+  void calendars_actionPerformed(ActionEvent e) {
+	    if (ignoreChange) return;
+	    else if (calendars.getSelectedIndex() == 1)
+	    {
+	    	jnCalendarWeek.getTableHeader().setPreferredSize(new Dimension(200, 15));
+	        jnCalendarPanel.add(jnCalendarWeek.getTableHeader(), BorderLayout.NORTH);
+	        jnCalendarPanel.add(jnCalendarWeek, BorderLayout.CENTER);
+	    	_date = new CalendarDate(_date.getDay(), calendars.getSelectedIndex(), _date.getYear());
+	        jnCalendar.set(_date);
+	    }
+	    else if (calendars.getSelectedIndex() == 0)
+	    {
+	    	jnCalendar.getTableHeader().setPreferredSize(new Dimension(200, 15));
+	        jnCalendarPanel.add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
+	        jnCalendarPanel.add(jnCalendar, BorderLayout.CENTER);
+	    	_date = new CalendarDate(_date.getDay(), calendars.getSelectedIndex(), _date.getYear());
+	        jnCalendar.set(_date);
+	    	
+	    }
+	    notifyListeners();
+	  }
 
   void yearSpin_actionPerformed() {
     if (ignoreChange) return;

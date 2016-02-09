@@ -83,7 +83,7 @@ public class CalendarDate {
         return new CalendarDate(cal);
     }
 
-    public static Calendar toCalendar(int day, int month, int year) {
+    public static Calendar toCalendar(int day,int month, int year) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month);
@@ -111,6 +111,7 @@ public class CalendarDate {
     public int getDay() {
         return _day;
     }
+    
 
     public int getMonth() {
         return _month;
