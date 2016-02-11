@@ -1,20 +1,22 @@
 package net.sf.memoranda.ui;
 
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Toolkit;
+// import java.awt.Dimension;
+// import java.awt.Frame;
+// import java.awt.Toolkit;
 import java.util.Calendar;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.UIManager;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+// import javax.swing.JFrame;
+// import javax.swing.JLabel;
+// import javax.swing.UIManager;
 
 import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.ui.LoginForm;
 
 /**
- * 
+ *
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 
@@ -23,21 +25,21 @@ public class App {
 	// boolean packFrame = false;
 
 	static AppFrame frame = null;
-	
+
 	public static final String GUIDE_URL = "http://memoranda.sourceforge.net/guide.html";
 	public static final String BUGS_TRACKER_URL = "http://sourceforge.net/tracker/?group_id=90997&atid=595566";
 	public static final String WEBSITE_URL = "http://memoranda.sourceforge.net";
 
 	private JFrame splash = null;
 
-	/*========================================================================*/ 
+	/*========================================================================*/
 	/* Note: Please DO NOT edit the version/build info manually!
-       The actual values are substituted by the Ant build script using 
+       The actual values are substituted by the Ant build script using
        'version' property and datestamp.*/
 
 	public static final String VERSION_INFO = "@VERSION@";
 	public static final String BUILD_INFO = "@BUILD@";
-	
+
 	/*========================================================================*/
 
 	public static AppFrame getFrame() {
@@ -52,15 +54,7 @@ public class App {
 			init();
 	}
 
-	public App(boolean fullmode) {
-		super();
-		if (fullmode)
-			fullmode = !Configuration.get("START_MINIMIZED").equals("yes");
-		/* DEBUG */
-		if (!fullmode)
-			System.out.println("Minimized mode");
-		if (!Configuration.get("SHOW_SPLASH").equals("no"))
-			showSplash();
+	public void startMenu(){
 		System.out.println(VERSION_INFO);
 		System.out.println(Configuration.get("LOOK_AND_FEEL"));
 		try {
@@ -69,13 +63,13 @@ public class App {
 					UIManager.getSystemLookAndFeelClassName());
 			else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
 				UIManager.setLookAndFeel(
-					UIManager.getCrossPlatformLookAndFeelClassName());					
+					UIManager.getCrossPlatformLookAndFeelClassName());
 			else if (
 				Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
 				UIManager.setLookAndFeel(
 					Configuration.get("LOOK_AND_FEEL").toString());
 
-		} catch (Exception e) {		    
+		} catch (Exception e) {
 			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", "Make sure that specified look-and-feel library classes are on the CLASSPATH.");
 		}
 		if (Configuration.get("FIRST_DAY_OF_WEEK").equals("")) {
@@ -92,7 +86,41 @@ public class App {
 
 		EventsScheduler.init();
 		frame = new AppFrame();
-		if (fullmode) {
+
+	}
+
+	public App(boolean fullmode) {
+		super();
+		if (fullmode)
+			fullmode = !Configuration.get("START_MINIMIZED").equals("yes");
+		/* DEBUG */
+		if (!fullmode)
+			System.out.println("Minimized mode");
+		if (!Configuration.get("SHOW_SPLASH").equals("no"))
+			showSplash();
+
+		final JFrame frame = new JFrame("Memoranda");
+		final JButton loginPrompt = new JButton("Start");
+
+		loginPrompt.addActionListener(
+                new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        LoginForm loginForm = new LoginForm(frame);
+                        loginForm.setVisible(true);
+                        if(loginForm.isSucceeded()){
+                            loginPrompt.setText("Hi " + loginForm.getUsername() + "!");
+							startMenu();
+                        }
+                    }
+                });
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 100);
+        frame.setLayout(new FlowLayout());
+        frame.getContentPane().add(loginPrompt);
+        frame.setVisible(true);
+
+		if (fullmode){
 			init();
 		}
 		if (!Configuration.get("SHOW_SPLASH").equals("no"))
@@ -100,23 +128,6 @@ public class App {
 	}
 
 	void init() {
-		/*
-		 * if (packFrame) { frame.pack(); } else { frame.validate(); }
-		 * 
-		 * Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		 * 
-		 * Dimension frameSize = frame.getSize(); if (frameSize.height >
-		 * screenSize.height) { frameSize.height = screenSize.height; } if
-		 * (frameSize.width > screenSize.width) { frameSize.width =
-		 * screenSize.width; }
-		 * 
-		 * 
-		 * Make the window fullscreen - On Request of users This seems not to
-		 * work on sun's version 1.4.1_01 Works great with 1.4.2 !!! So update
-		 * your J2RE or J2SDK.
-		 */
-		/* Used to maximize the screen if the JVM Version if 1.4 or higher */
-		/* --------------------------------------------------------------- */
 		double JVMVer =
 			Double
 				.valueOf(System.getProperty("java.version").substring(0, 3))
@@ -128,10 +139,6 @@ public class App {
 		} else {
 			frame.setExtendedState(Frame.NORMAL);
 		}
-		/* --------------------------------------------------------------- */
-		/* Added By Jeremy Whitlock (jcscoobyrs) 07-Nov-2003 at 15:54:24 */
-
-		// Not needed ???
 		frame.setVisible(true);
 		frame.toFront();
 		frame.requestFocus();
