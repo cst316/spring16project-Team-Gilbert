@@ -99,32 +99,22 @@ public class App {
 		if (!Configuration.get("SHOW_SPLASH").equals("no"))
 			showSplash();
 
-		final JFrame frame = new JFrame("Memoranda");
-		final JButton loginPrompt = new JButton("Start");
+		// final JFrame frame = new JFrame("Memoranda");
+		// loginForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// loginForm.setSize(400,300);
 
-		loginPrompt.addActionListener(
-                new ActionListener(){
-                    public void actionPerformed(ActionEvent e) {
-                        LoginForm loginForm = new LoginForm(frame);
-                        loginForm.setVisible(true);
-                        if(loginForm.isSucceeded()){
-                            loginPrompt.setText("Hi " + loginForm.getUsername() + "!");
-							startMenu();
-                        }
-                    }
-                });
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 100);
-        frame.setLayout(new FlowLayout());
-        frame.getContentPane().add(loginPrompt);
-        frame.setVisible(true);
-
-		if (fullmode){
-			init();
-		}
-		if (!Configuration.get("SHOW_SPLASH").equals("no"))
+		LoginForm loginForm = new LoginForm(frame);
+		loginForm.setVisible(true);
+		if(loginForm.isSucceeded()){
+			startMenu();
+			if (fullmode){
+				init();
+			}
+			if (!Configuration.get("SHOW_SPLASH").equals("no"))
 			splash.dispose();
+		} else{
+			splash.dispose();
+		}
 	}
 
 	void init() {

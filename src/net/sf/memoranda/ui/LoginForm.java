@@ -70,7 +70,7 @@ public class LoginForm extends JDialog{
 		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				dispose();
+				closeWindow(e);
 			}
 		});
 		JPanel bp = new JPanel();
@@ -82,8 +82,7 @@ public class LoginForm extends JDialog{
 
 		pack();
 		setResizable(false);
-		setLocationRelativeTo(parent);
-
+		setLocationRelativeTo(null);
 	}
 
     public String getUsername(){
@@ -96,5 +95,9 @@ public class LoginForm extends JDialog{
 
     public boolean isSucceeded(){
         return succeeded;
+    }
+
+    private void closeWindow(ActionEvent e){
+        this.dispose();
     }
 }
