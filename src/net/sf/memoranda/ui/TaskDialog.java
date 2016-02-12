@@ -368,8 +368,9 @@ public class TaskDialog extends JDialog {
         
         jPanelNotes.add(jaddNote, null);
         jPanelNotes.add(addNote, null);
-        addNote.setSelectedItem(1);
+        
         jPanel2.add(jPanelNotes);
+        addNote.setSelectedItem(Local.getString("No"));
         
         priorityCB.setSelectedItem(Local.getString("Normal"));
         startCalFrame.cal.addSelectionListener(new ActionListener() {
@@ -387,6 +388,22 @@ public class TaskDialog extends JDialog {
                 endDate.getModel().setValue(endCalFrame.cal.get().getCalendar().getTime());
             }
         });
+        
+        ActionListener stickerActionListener = new ActionListener(){
+        	public void actionPerformed(ActionEvent e){
+        		String s = (String) addNote.getSelectedItem();
+        		
+        		switch (s){
+        		case "No":
+        			;
+        		case "Yes":
+        			StickerDialog w2 = new StickerDialog();
+        			w2.setVisible(true);
+        		}
+        	}
+        };
+        
+        addNote.addActionListener(stickerActionListener);
     }
 
 	public void setStartDate(CalendarDate d) {
@@ -409,7 +426,7 @@ public class TaskDialog extends JDialog {
 	}
 	
     void okB_actionPerformed(ActionEvent e) {
-	CANCELLED = false;
+	CANCELLED = false;	
         this.dispose();
     }
 
