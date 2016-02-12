@@ -77,10 +77,10 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
         if (!(value instanceof Task))
             return empty_panel;
         Task t = (Task) value; 
-        setText(t.getText());
+        setText("<html><body><font size=\"4\"><b>"+t.getText()+"</font></b><br><font size=\"2\"><i>"+t.getDescription()+"</font></i></body></html>");
         setToolTipText(t.getDescription());
         setIcon(getStatusIcon(t));
-        applyFont(t, this);
+        //applyFont(t, this);
         //return getTaskTreeCellRenderer(t, selected, hasFocus);
         return this;
     }
@@ -88,6 +88,7 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
     public Component getTableCellRendererComponent(JTable ignore, Object value, boolean selected,
             boolean hasFocus, int row, int column) {        
         Task t = (Task) table.getValueAt(row, 1);
+        //Task tT = (Task) value;
         if (column == 1) {
             // this never happens because
             // column 1 contains TreeTableModel
@@ -99,6 +100,7 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
         // label.setOpaque(true);
         label.setForeground(Color.BLACK);
         label.setIcon(null);
+        
        // label.setToolTipText(t.getDescription()); //XXX Disabled because of bug 1596966
         applyFont(t, label);
         applySelectionStyle(selected, label);
