@@ -155,19 +155,13 @@ public class PreferencesDialog extends JDialog {
 		this(null);
 	}
 
-	/****************** Start Sound Tab ****************/
+	/****************** START SOUND TAB ****************/
 	void jbInit() throws Exception {
 		titledBorder1 = new TitledBorder(BorderFactory.createEtchedBorder(
 				Color.white, new Color(156, 156, 158)), Local
 				.getString("Sound"));
 		this.setResizable(false);
-		jLabel1.setHorizontalAlignment(SwingConstants.RIGHT);
-		jLabel1.setText(Local.getString("Window minimize action:"));
-		gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(10, 10, 0, 15);
-		gbc.anchor = GridBagConstraints.EAST;
+		
 		enableSoundCB.setText(Local.getString("Enable sound notifications"));
 		enableSoundCB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -204,9 +198,10 @@ public class PreferencesDialog extends JDialog {
 				soundCustomRB_actionPerformed(e);
 			}
 		});
-		/***************** End Sound Tab ****************/	
+		/***************** END SOUND TAB ****************/	
 		
-		/*************** Start General Tab **************/		
+		
+		/*************** START GENERAL TAB **************/		
 		jPanel2.setLayout(borderLayout2);
 		soundPanel.add(jPanel2, BorderLayout.CENTER);
 		jPanel2.add(jPanel1, BorderLayout.NORTH);
@@ -220,6 +215,24 @@ public class PreferencesDialog extends JDialog {
 		jPanel3.add(soundFile, BorderLayout.CENTER);
 		jPanel3.add(soundFileBrowseB, BorderLayout.EAST);
 		jPanel3.add(jLabel6, BorderLayout.WEST);
+		
+		/******** Window Minimize Action Start *********/
+		
+		// 1. Moved this label away from the sound options to it's proper
+		//    place in the code.
+		// 2. Fixed positioning of jLabel1.
+		// Ricky Lind 2/14/16
+		gbc = new GridBagConstraints();
+		gbc.insets = new Insets(10, 0, 0, 5);
+		gbc.anchor = GridBagConstraints.WEST;
+		jLabel1.setHorizontalAlignment(SwingConstants.RIGHT);
+		jLabel1.setText(Local.getString("Window minimize action:"));
+		
+		gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(10, 10, 0, 15);
+		gbc.anchor = GridBagConstraints.EAST;
 		GeneralPanel.add(jLabel1, gbc);
 		minGroup.add(minTaskbarRB);
 		minTaskbarRB.setSelected(true);
@@ -229,6 +242,7 @@ public class PreferencesDialog extends JDialog {
 				minTaskbarRB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -242,6 +256,11 @@ public class PreferencesDialog extends JDialog {
 				minHideRB_actionPerformed(e);
 			}
 		});
+		
+		/********* Window Minimize Action End **********/
+		
+		/******** Window Close Action Start *********/
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 1;
@@ -250,6 +269,7 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(minHideRB, gbc);
 		jLabel2.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel2.setText(Local.getString("Window close action:"));
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -264,13 +284,13 @@ public class PreferencesDialog extends JDialog {
 				closeExitRB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(closeExitRB, gbc);
-
 		closeGroup.add(closeHideRB);
 		closeHideRB.setText(Local.getString("Hide"));
 		closeHideRB.addActionListener(new java.awt.event.ActionListener() {
@@ -278,6 +298,11 @@ public class PreferencesDialog extends JDialog {
 				closeHideRB_actionPerformed(e);
 			}
 		});
+		
+		/********* Window Close Action End **********/
+		
+		/*********** Look and Feel Start ************/
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 3;
@@ -286,6 +311,7 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(closeHideRB, gbc);
 		jLabel3.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel3.setText(Local.getString("Look and feel:"));
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 4;
@@ -378,6 +404,9 @@ public class PreferencesDialog extends JDialog {
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(classNameLabel, gbc);
 		lfClassName.setEnabled(false);
+		
+		/************ Look and Feel End *************/
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 9;
@@ -387,6 +416,7 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(lfClassName, gbc);
 		jLabel4.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel4.setText(Local.getString("Startup:"));
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 10;
@@ -399,6 +429,7 @@ public class PreferencesDialog extends JDialog {
 				enSystrayChB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 10;
@@ -406,6 +437,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(enSystrayChB, gbc);
 		startMinimizedChB.setText(Local.getString("Start minimized"));
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 11;
@@ -418,6 +450,7 @@ public class PreferencesDialog extends JDialog {
 				enSplashChB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 12;
@@ -430,6 +463,7 @@ public class PreferencesDialog extends JDialog {
 				enL10nChB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 13;
@@ -441,6 +475,7 @@ public class PreferencesDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 14;
@@ -449,6 +484,7 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(firstdow, gbc);
 		lblExit.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblExit.setText(Local.getString("Exit") + ":");
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 15;
@@ -462,6 +498,7 @@ public class PreferencesDialog extends JDialog {
 				askConfirmChB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 15;
@@ -469,7 +506,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(askConfirmChB, gbc);
 		
-		/*************** End General Tab **************/	
+		/*************** END GENERAL TAB **************/	
 		
 		// Build Tab2
 		rstPanelBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -601,17 +638,29 @@ public class PreferencesDialog extends JDialog {
 
 		askConfirmChB.setSelected(!Configuration.get("ASK_ON_EXIT").toString()
 				.equalsIgnoreCase("no"));
+		
 		String onclose = Configuration.get("ON_CLOSE").toString();
 		if (onclose.equals("exit")) {
 			this.closeExitRB.setSelected(true);
 			// this.askConfirmChB.setEnabled(true);
-		} else {
+		} 
+		else {
 			this.closeHideRB.setSelected(true);
 			// this.askConfirmChB.setEnabled(false);
 		}
 
 		String onmin = Configuration.get("ON_MINIMIZE").toString();
-		this.minTaskbarRB.setSelected(true);
+		// 1. Setup if/else statement to check what the configuration
+		//    is for ON_MINIMIZE.
+		// Ricky Lind 2/14/16
+		///////////////////////////////
+		if (onmin.equals("normal")) {
+			this.minTaskbarRB.setSelected(true);
+		} 
+		else {
+			this.minHideRB.setSelected(true);
+		}
+		///////////////////////////////
 
 		if (!System.getProperty("os.name").startsWith("Win"))
 			this.browserPath.setText(MimeTypesList.getAppList()
@@ -697,9 +746,17 @@ public class PreferencesDialog extends JDialog {
 			Configuration.put("ON_CLOSE", "exit");
 		else
 			Configuration.put("ON_CLOSE", "minimize");
-
-		Configuration.put("ON_MINIMIZE", "normal");
-
+		
+		// Added missing if else statements for Minimize preferences
+		// options. This should should assist in allowing this preference
+		// setting writing to Configuration which will allow the preference
+		// to be remembered and not always default to "Minimize to Taskbar."
+		// Ricky Lind 2/14/16
+		if (this.minTaskbarRB.isSelected())
+			Configuration.put("ON_MINIMIZE", "normal");
+		else
+			Configuration.put("ON_MINIMIZE", "hide");
+		
 		String lf = Configuration.get("LOOK_AND_FEEL").toString();
 		String newlf = "";
 
@@ -810,12 +867,12 @@ public class PreferencesDialog extends JDialog {
 		// this.askConfirmChB.setEnabled(true);
 	}
 
-	void askConfirmChB_actionPerformed(ActionEvent e) {
-
-	}
-
 	void closeHideRB_actionPerformed(ActionEvent e) {
 		// this.askConfirmChB.setEnabled(false);
+	}
+	
+	void askConfirmChB_actionPerformed(ActionEvent e) {
+
 	}
 
 	void lfSystemRB_actionPerformed(ActionEvent e) {
