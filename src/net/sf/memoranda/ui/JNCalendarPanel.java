@@ -51,7 +51,7 @@ import net.sf.memoranda.util.Local;
 
 /*$Id: JNCalendarPanel.java,v 1.9 2004/04/05 10:05:44 alexeya Exp $*/
 public class JNCalendarPanel extends JPanel {
-  String pickcalendar[] = {"Monthly", "Weekly"};
+  String pickcalendar[] = {"Monthly", "Today's week"};
   CalendarDate _date = CurrentDate.get();
   JToolBar navigationBar = new JToolBar();
   JPanel mntyPanel = new JPanel(new BorderLayout());
@@ -231,7 +231,7 @@ public class JNCalendarPanel extends JPanel {
           calendars_actionPerformed(e);
         }
       });
-
+    
     yearSpin.addChangeListener(new ChangeListener() {
       public void stateChanged(ChangeEvent e) {
         yearSpin_actionPerformed();
@@ -283,13 +283,6 @@ public class JNCalendarPanel extends JPanel {
     ignoreChange = false;
   }
   
-  private void refreshViewWeek() {
-	    ignoreChange = true;
-	    jnCalendarWeek.set(_date);
-	    calendars.setSelectedIndex(new Integer(_date.getMonth()));
-	    yearSpin.setValue(new Integer(_date.getYear()));
-	    ignoreChange = false;
-	  }
 
   void monthsCB_actionPerformed(ActionEvent e) {
     if (ignoreChange) return;
@@ -302,23 +295,22 @@ public class JNCalendarPanel extends JPanel {
 	    if (ignoreChange) return;
 	    else if (calendars.getSelectedIndex() == 1)
 	    {
-	    	jnCalendarWeek.getTableHeader().setPreferredSize(new Dimension(200, 15));
+	        jnCalendarWeek.getTableHeader().setPreferredSize(new Dimension(200, 15));
 	        jnCalendarPanel.add(jnCalendarWeek.getTableHeader(), BorderLayout.NORTH);
 	        jnCalendarPanel.add(jnCalendarWeek, BorderLayout.CENTER);
 	    	_date = new CalendarDate(_date.getDay(), calendars.getSelectedIndex(), _date.getYear());
-	        jnCalendar.set(_date);
+	        jnCalendarWeek.set(_date);
 	    }
 	    else if (calendars.getSelectedIndex() == 0)
 	    {
-	    	jnCalendar.getTableHeader().setPreferredSize(new Dimension(200, 15));
-	        jnCalendarPanel.add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
 	        jnCalendarPanel.add(jnCalendar, BorderLayout.CENTER);
-	    	_date = new CalendarDate(_date.getDay(), calendars.getSelectedIndex(), _date.getYear());
-	        jnCalendar.set(_date);
-	    	
+	        set(_date);
+	        monthsCB_actionPerformed (e);
+	        
 	    }
 	    notifyListeners();
 	  }
+  
 
   void yearSpin_actionPerformed() {
     if (ignoreChange) return;

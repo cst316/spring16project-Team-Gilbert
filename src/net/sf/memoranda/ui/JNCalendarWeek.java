@@ -24,7 +24,6 @@ import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Configuration;
 
-
 public class JNCalendarWeek extends JTable {
 
 	private CalendarDate _date = null;
@@ -163,7 +162,6 @@ public class JNCalendarWeek extends JTable {
 
 	int firstDay;
 	int daysInMonth;
-	public static final int DAYSINWEEK = 7;
 
 	void setCalendarParameters() {
 		int d = 1;
@@ -176,7 +174,7 @@ public class JNCalendarWeek extends JTable {
 		} else
 			cal.setFirstDayOfWeek(Calendar.SUNDAY);
 
-		cal.set(Calendar.DAY_OF_WEEK, 1);
+		cal.set(Calendar.DAY_OF_MONTH, 1);
 		cal.getTime();
 		firstDay = cal.get(Calendar.DAY_OF_WEEK) - d;
 		if (firstDay == -1)
@@ -184,6 +182,7 @@ public class JNCalendarWeek extends JTable {
 		daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
 
+	/*$Id: JNCalendar.java,v 1.8 2004/11/05 07:38:10 pbielen Exp $*/
 public class JNCalendarModel extends AbstractTableModel {
 
 		private String[] dayNames = Local.getWeekdayNames();
@@ -207,7 +206,8 @@ public class JNCalendarModel extends AbstractTableModel {
 		}
 
 		public int getRowCount() {
-			return 5;
+			Calendar cal = _date.getCalendar();
+			return cal.get(Calendar.WEEK_OF_MONTH);
 		}
 
 		public String getColumnName(int col) {
@@ -217,3 +217,5 @@ public class JNCalendarModel extends AbstractTableModel {
 	}
 
 }
+
+
