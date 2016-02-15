@@ -81,7 +81,8 @@ public class ProjectsTablePanel extends JPanel {
     }
     void jbInit() throws Exception {
         projectsTable.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
-        projectsTable.setFont(new java.awt.Font("Dialog", 0, 11));
+        projectsTable.setFont(new java.
+        awt.Font("Dialog", 0, 11));
         projectsTable.setMinimumSize(new Dimension(200, 100));
         projectsTable.setMaximumSize(new Dimension(32767, 32767));
         //projectsTable.setPreferredSize(new Dimension(400, 100));
@@ -105,7 +106,7 @@ public class ProjectsTablePanel extends JPanel {
             }
             else {
                 column.setMinWidth(80);
-                column.setPreferredWidth(80);                
+                column.setPreferredWidth(80);
             }
         }
     }

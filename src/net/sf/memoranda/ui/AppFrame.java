@@ -222,7 +222,7 @@ public class AppFrame extends JFrame {
     JMenu jMenuFormatTable = new JMenu();
     JMenuItem jMenuFormatTableInsR = new JMenuItem(editor.insertTableRowAction);
     JMenuItem jMenuFormatTableInsC = new JMenuItem(editor.insertTableCellAction);
-    JMenuItem jMenuFormatProperties = new JMenuItem(editor.propsAction);
+  //  JMenuItem jMenuFormatProperties = new JMenuItem(editor.propsAction);
     JMenuItem jMenuGoHBack = new JMenuItem(History.historyBackAction);
     JMenuItem jMenuGoFwd = new JMenuItem(History.historyForwardAction);
 
@@ -424,10 +424,10 @@ public class AppFrame extends JFrame {
         jMenuFormatTable.setText(Local.getString("Table"));
         jMenuFormatTableInsR.setText(Local.getString("Insert row"));
         jMenuFormatTableInsC.setText(Local.getString("Insert cell"));
-        jMenuFormatProperties.setText(Local.getString("Object properties")
-                + "...");
-        jMenuFormatProperties.setToolTipText(Local.getString(
-                "Object properties"));
+       // jMenuFormatProperties.setText(Local.getString("Object properties")
+   //             + "...");
+     //   jMenuFormatProperties.setToolTipText(Local.getString(
+  //              "Object properties"));
 
         jMenuGo.setText(Local.getString("Go"));
         jMenuGoHBack.setText(Local.getString("History back"));
@@ -515,7 +515,7 @@ public class AppFrame extends JFrame {
         jMenuFormat.addSeparator();
         jMenuFormat.add(jMenuFormatTable);
         jMenuFormat.addSeparator();
-        jMenuFormat.add(jMenuFormatProperties);
+       // jMenuFormat.add(jMenuFormatProperties);
         jMenuFormatPStyle.add(jMenuFormatP);
         jMenuFormatPStyle.addSeparator();
         jMenuFormatPStyle.add(jMenuFormatH1);
