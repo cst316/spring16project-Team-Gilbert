@@ -332,6 +332,10 @@ public class PreferencesDialog extends JDialog {
 		// Ricky Lind 2/1/2016
 		GeneralPanel.add(lfAddedRB, gbc);
 		lfGroup.add(lfAddedRB);
+		// 1. Added setSelected so the default Look and Feel will
+		//    be Look and feel 1.
+		// Ricky Lind 2/14/16
+		lfSystemRB.setSelected(true);
 		lfAddedRB.setText(Local.getString("Look and Feel 1"));
 		lfAddedRB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -624,8 +628,11 @@ public class PreferencesDialog extends JDialog {
 				.equalsIgnoreCase("mon"));
 
 		enableCustomLF(false);
+		// Reworked entire logic so the program will remember what
+		// setting the user last selected.
+		// Ricky Lind 2/14/16
 		String lf = Configuration.get("LOOK_AND_FEEL").toString();
-		if (lf.equalsIgnoreCase("system"))
+		/*if (lf.equalsIgnoreCase("system"))
 			lfSystemRB.setSelected(true);
 		else if (lf.equalsIgnoreCase("default"))
 			lfJavaRB.setSelected(true);
@@ -634,9 +641,22 @@ public class PreferencesDialog extends JDialog {
 			enableCustomLF(true);
 			lfClassName.setText(lf);
 		} else
-			lfJavaRB.setSelected(true);
+			lfJavaRB.setSelected(true);*/
+		
+		if (lf.equals("system")) {
+			this.lfSystemRB.setSelected(true);
+		}
+		else if (lf.equals("java")) {
+			this.lfJavaRB.setSelected(true);
+		}
+		else if (lf.equals("added")) {
+			this.lfAddedRB.setSelected(true);
+		}
+		else {
+			this.lfCustomRB.setSelected(true);
+		}
 
-		askConfirmChB.setSelected(!Configuration.get("ASK_ON_EXIT").toString()
+ 		askConfirmChB.setSelected(!Configuration.get("ASK_ON_EXIT").toString()
 				.equalsIgnoreCase("no"));
 		
 		String onclose = Configuration.get("ON_CLOSE").toString();
@@ -653,14 +673,12 @@ public class PreferencesDialog extends JDialog {
 		// 1. Setup if/else statement to check what the configuration
 		//    is for ON_MINIMIZE.
 		// Ricky Lind 2/14/16
-		///////////////////////////////
 		if (onmin.equals("normal")) {
 			this.minTaskbarRB.setSelected(true);
 		} 
 		else {
 			this.minHideRB.setSelected(true);
 		}
-		///////////////////////////////
 
 		if (!System.getProperty("os.name").startsWith("Win"))
 			this.browserPath.setText(MimeTypesList.getAppList()
@@ -760,25 +778,41 @@ public class PreferencesDialog extends JDialog {
 		String lf = Configuration.get("LOOK_AND_FEEL").toString();
 		String newlf = "";
 
+		// Added in an additional else if statement to account for the added
+		// RB.
+		// Ricky Lind 2/14/16
 		if (this.lfSystemRB.isSelected())
 			newlf = "system";
 		else if (this.lfJavaRB.isSelected())
-			newlf = "default";
+			newlf = "java";
+		else if (this.lfAddedRB.isSelected())
+			newlf = "added";
 		else if (this.lfCustomRB.isSelected())
 			newlf = this.lfClassName.getText();
 
+		// Reworked the Look and Feel logic and added else if statements to
+		// include "java" and "added." Look and Feel buttons now work and
+		// the settings are saved in the .properties file.
+		// Ricky Lind 2/14/16
 		if (!lf.equalsIgnoreCase(newlf)) {
 			Configuration.put("LOOK_AND_FEEL", newlf);
 			try {
-				if (Configuration.get("LOOK_AND_FEEL").equals("system"))
+				if (Configuration.get("LOOK_AND_FEEL").equals("system")) {
 					UIManager.setLookAndFeel(UIManager
 							.getSystemLookAndFeelClassName());
-				else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
+				}
+				else if (Configuration.get("LOOK_AND_FEEL").equals("java")) {
 					UIManager.setLookAndFeel(UIManager
 							.getCrossPlatformLookAndFeelClassName());
-				else if (Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+				}
+				else if (Configuration.get("LOOK_AND_FEEL").equals("added")) {
+					UIManager.setLookAndFeel(UIManager
+							.getCrossPlatformLookAndFeelClassName());
+				}
+				else if (Configuration.get("LOOK_AND_FEEL").toString().length() > 0) {
 					UIManager.setLookAndFeel(Configuration.get("LOOK_AND_FEEL")
 							.toString());
+				}
 
 				SwingUtilities.updateComponentTreeUI(App.getFrame());
 
