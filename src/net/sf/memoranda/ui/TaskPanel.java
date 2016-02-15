@@ -25,6 +25,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import net.sf.memoranda.CurrentProject;
+import net.sf.memoranda.TaskManager;
 import net.sf.memoranda.History;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
@@ -704,9 +705,18 @@ public class TaskPanel extends JPanel {
             if (t != null)
                 toremove.add(t);
         }
-        for (int i = 0; i < toremove.size(); i++) {
-            CurrentProject.getTaskList().removeTask((Task)toremove.get(i));
-        }
+//        for (int i = 0; i < toremove.size(); i++) {
+//            CurrentProject.getTaskList().removeTask((Task)toremove.get(i));
+//        }
+        
+        net.sf.memoranda.Task ta;        
+
+        for(int i=0; i< taskTable.getSelectedRows().length;i++) {
+        			ta = (net.sf.memoranda.Task) taskTable.getModel().getValueAt(
+                          taskTable.getSelectedRows()[i], taskTable.TASK);
+                TaskManager.removeTask(ta);
+        		}
+        
         taskTable.tableChanged();
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         parentPanel.updateIndicators();
