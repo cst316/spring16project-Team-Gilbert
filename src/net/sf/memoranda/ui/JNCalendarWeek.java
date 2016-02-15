@@ -83,6 +83,7 @@ public class JNCalendarWeek extends JTable {
 		colSM.addListSelectionListener(lsl);
 	}
 
+
 	int getSelRow() {
 		return this.getSelectedRow();
 	}
@@ -91,6 +92,9 @@ public class JNCalendarWeek extends JTable {
 		return this.getSelectedColumn();
 	}
 
+	/*
+	 * sets up the calendar for the week using the current date.
+	 */
 	public JNCalendarWeek(CalendarDate date, CalendarDate sd, CalendarDate ed) {
 		this(date);
 		setSelectablePeriod(sd, ed);
@@ -124,7 +128,11 @@ public class JNCalendarWeek extends JTable {
 				new ActionEvent(this, 0, "Calendar event"));
 		}
 	}
-
+	/*
+	 * renders the calendar using the row and column
+	 * (non-Javadoc)
+	 * @see javax.swing.JTable#getCellRenderer(int, int)
+	 */
 	public TableCellRenderer getCellRenderer(int row, int column) {
 		Object d = this.getModel().getValueAt(row, column);
 		/*
@@ -143,6 +151,9 @@ public class JNCalendarWeek extends JTable {
 		return renderer;
 	}
 
+	/*
+	 * selects a row and column for choosing a date
+	 */
 	void doSelection() {
 		ignoreChange = true;
 		int selRow = getRow(_date.getDay());
