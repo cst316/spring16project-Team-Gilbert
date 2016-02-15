@@ -167,7 +167,7 @@ public class TaskTable extends JTable {
 		// And update the height of the trees row to match that of
 		// the table.
 		//if (tree.getRowHeight() < 1) {
-			setRowHeight(18);
+			setRowHeight(54);
 		//}
 		initColumnWidths();
 		

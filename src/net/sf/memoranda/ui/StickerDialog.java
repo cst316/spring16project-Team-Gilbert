@@ -10,6 +10,7 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DateFormat;
 
 import javax.swing.BorderFactory;
@@ -31,6 +32,7 @@ import javax.swing.border.EmptyBorder;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.Local;
+import net.sf.memoranda.ui.TaskDialog;
 
 /*$Id: StickerDialog.java,v 1.5 2004/10/07 21:31:33 ivanrise Exp $*/
 public class StickerDialog extends JDialog {
@@ -56,7 +58,8 @@ public class StickerDialog extends JDialog {
 	JLabel jLabel2 = new JLabel();
 	JLabel jLabel3 = new JLabel();
 	JLabel jLabel4 = new JLabel();
-	GridLayout gridLayout1 = new GridLayout(6,2);
+	JLabel jLabel5 = new JLabel();
+	GridLayout gridLayout1 = new GridLayout(7,2);
 
 	Border border1;
 	Border border2;
@@ -92,11 +95,18 @@ public class StickerDialog extends JDialog {
 			Local.getString("LOW"),
 			Local.getString("LOWEST")};
 	int[] font={10,15,20};
+	String[] yesOrNo = {
+			Local.getString("Yes"),
+			Local.getString("No"),
+			
+	};
+	
 	String[] fontLabels= {"10px","15px","20px"};
 	JComboBox stickerColor = new JComboBox(colorLabels);
 	JComboBox textColor = new JComboBox(colorLabels);
 	JComboBox fontSize = new JComboBox(fontLabels);
 	JComboBox priorityList = new JComboBox(priorities);
+//	JComboBox addToTask = new JComboBox(yesOrNo);
 	
 
 	public StickerDialog(Frame frame) {
@@ -149,6 +159,8 @@ public class StickerDialog extends JDialog {
 		textColor.setRenderer(new ComboBoxRenderer2());
 		textColor.setMaximumRowCount(11);
 		priorityList.setSelectedIndex(2);
+//		addToTask.setRenderer(new ComboBoxRenderer3());
+//		addToTask.setSelectedIndex(1);
 		border1 =
 			BorderFactory.createCompoundBorder(
 				BorderFactory.createEtchedBorder(
@@ -218,6 +230,7 @@ public class StickerDialog extends JDialog {
 		jLabel2.setText(Local.getString("Font color")+": ");
 		jLabel3.setText(Local.getString("Font Size")+": ");
 		jLabel4.setText(Local.getString("Priority")+": ");
+//		jLabel5.setText(Local.getString("Add to task?")+": ");
 		jPanel1.setLayout(gridLayout1);
 		panel1.setBorder(border1);
 		jPanel1.setBorder(border2);
@@ -238,13 +251,15 @@ public class StickerDialog extends JDialog {
 		jPanel1.add(textColor);
 		jPanel1.add(jLabel3);
 		jPanel1.add(fontSize);
-		
+				
 		jPanel1.add(boldButton);
 		jPanel1.add(italicButton);
 		jPanel1.add(underlineButton);
 		jPanel1.add(unorderedListButton);
 		jPanel1.add(jLabel4);
 		jPanel1.add(priorityList);
+		jPanel1.add(jLabel5);
+//		jPanel1.add(addToTask);
 		
 		if (Context.get("STICKER_COLOR") != null) {
 			Color c = new Color(new Integer(Context.get("STICKER_COLOR").toString()).intValue());
@@ -342,6 +357,18 @@ public class StickerDialog extends JDialog {
 	int getPriority(){
 		return priorityList.getSelectedIndex();
 	}
+//	
+//	int getAddToTask(){
+//		return addToTask.getSelectedIndex();
+//	}
+//	
+//	void addStickerToTask(){
+//		int yesOrNo = getAddToTask();
+//		
+//		if (yesOrNo == 1){
+//			
+//		}
+//	}
 
 	void cancelButton_actionPerformed(ActionEvent e) {
 		this.dispose();
@@ -461,6 +488,21 @@ public class StickerDialog extends JDialog {
 			setText(value.toString());
 			return this;
 		}
+		//addToTask.addActionListener(taskActionListener);
+		
+//	    ActionListener taskActionListener = new ActionListener(){
+//	    	public void actionPerformed(ActionEvent e){
+//	    		String s = (String) addToTask.getSelectedItem();
+//	    		
+//	    		switch (s){
+//	    		case "No":
+//	    			;
+//	    		case "Yes":
+//	    			TaskDialog w2 = new TaskDialog();
+//	    			w2.setVisible(true);
+//	    		}
+//	    	}
+//	    };
 	}
 	class ComboBoxRenderer2 extends JLabel implements ListCellRenderer {
 		public ComboBoxRenderer2() {
@@ -487,5 +529,31 @@ public class StickerDialog extends JDialog {
 			return this;
 		}
 	}
+	
+	class ComboBoxRenderer3 extends JLabel implements ListCellRenderer {
+		public ComboBoxRenderer3() {
+			setOpaque(true);
 
+		}
+		public Component getListCellRendererComponent(
+			JList list,
+			Object value,
+			int index,
+			boolean isSelected,
+			boolean cellHasFocus) {
+			/*
+			 * if (isSelected) { setBackground(list.getSelectionBackground());
+			 * setForeground(list.getSelectionForeground());
+			 */
+			if ((index > -1) && (index < colors.length))
+				setForeground(colors[index]);
+			else
+				setForeground(list.getForeground());
+			setBackground(list.getBackground());
+			//}
+			setText(value.toString());
+			return this;
+		}
+	}
 }
+

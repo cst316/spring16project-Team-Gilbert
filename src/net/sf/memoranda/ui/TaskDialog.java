@@ -57,7 +57,7 @@ public class TaskDialog extends JDialog {
     Border border4;
 //    Border border5;
 //    Border border6;
-    JPanel jPanel2 = new JPanel(new GridLayout(3, 2));
+    JPanel jPanel2 = new JPanel(new GridLayout(4, 2));
     JTextField todoField = new JTextField();
     
     // added by rawsushi
@@ -72,6 +72,7 @@ public class TaskDialog extends JDialog {
     String[] priority = {Local.getString("Lowest"), Local.getString("Low"),
         Local.getString("Normal"), Local.getString("High"),
         Local.getString("Highest")};
+    String[] yesOrNo = {Local.getString("Yes"), Local.getString("No")};
     boolean ignoreStartChanged = false;
     boolean ignoreEndChanged = false;
     JPanel jPanel4 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -88,10 +89,13 @@ public class TaskDialog extends JDialog {
     JPanel jPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JPanel jPanelEffort = new JPanel(new FlowLayout(FlowLayout.LEFT));
 //    JPanel jPanelNotes = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel jPanelNotes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     
     JButton setNotifB = new JButton();
     JComboBox priorityCB = new JComboBox(priority);
     JLabel jLabel7 = new JLabel();
+    JComboBox addNote = new JComboBox(yesOrNo);
+    JLabel jaddNote = new JLabel("Add note?: ");
     // added by rawsushi
     JLabel jLabelEffort = new JLabel();
     JLabel jLabelDescription = new JLabel();
@@ -323,6 +327,7 @@ public class TaskDialog extends JDialog {
         jLabel7.setText(Local.getString("Priority"));
 
         priorityCB.setFont(new java.awt.Font("Dialog", 0, 11));
+        addNote.setFont(new java.awt.Font("Dialog", 0, 11));
         jPanel4.add(jLabel7, null);
         getContentPane().add(mPanel);
         mPanel.add(areaPanel, BorderLayout.CENTER);
@@ -361,6 +366,12 @@ public class TaskDialog extends JDialog {
         jPanelProgress.add(progress, null);
         jPanel2.add(jPanelProgress);
         
+        jPanelNotes.add(jaddNote, null);
+        jPanelNotes.add(addNote, null);
+        
+        jPanel2.add(jPanelNotes);
+        addNote.setSelectedItem(Local.getString("No"));
+        
         priorityCB.setSelectedItem(Local.getString("Normal"));
         startCalFrame.cal.addSelectionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -377,6 +388,22 @@ public class TaskDialog extends JDialog {
                 endDate.getModel().setValue(endCalFrame.cal.get().getCalendar().getTime());
             }
         });
+        
+        ActionListener stickerActionListener = new ActionListener(){
+        	public void actionPerformed(ActionEvent e){
+        		String s = (String) addNote.getSelectedItem();
+        		
+        		switch (s){
+        		case "No":
+        			;
+        		case "Yes":
+        			StickerDialog w2 = new StickerDialog();
+        			w2.setVisible(true);
+        		}
+        	}
+        };
+        
+        addNote.addActionListener(stickerActionListener);
     }
 
 	public void setStartDate(CalendarDate d) {
@@ -399,7 +426,7 @@ public class TaskDialog extends JDialog {
 	}
 	
     void okB_actionPerformed(ActionEvent e) {
-	CANCELLED = false;
+	CANCELLED = false;	
         this.dispose();
     }
 
