@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -90,9 +91,12 @@ public class ProjectPackager {
                 }	
                 ProjectManager.removeProject(pId);
             }
-            Project prj = ProjectManager.createProject(pId, pTitle, new CalendarDate(pStartD), null);
-            if (pEndD != null)
+
+			Project prj = ProjectManager.createProject(pId, pTitle, new CalendarDate(pStartD), null);
+            if (pEndD != null){
                 prj.setEndDate(new CalendarDate(pEndD));
+                prj.setPREndDate(pEndD);
+            }
             //File prDir = new File(JN_DOCPATH + prj.getID());
             Enumeration files;           
             for (files = zip.entries(); files.hasMoreElements();){

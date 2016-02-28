@@ -8,12 +8,14 @@
  */
 package net.sf.memoranda;
 
+import java.util.Date;
+
 import net.sf.memoranda.date.CalendarDate;
 
 /**
  * 
  */
-
+//snesmith: updated to make a project countdown timer.
 /*$Id: Project.java,v 1.5 2004/11/22 10:02:37 alexeya Exp $*/
 public interface Project {
     
@@ -52,6 +54,10 @@ public interface Project {
     //ResourcesList getResourcesList();
     
     void freeze();
-    void unfreeze();  
+    void unfreeze();
+
+	void setPREndDate(String end);  
+	
+	 String getPREndDate();
     
 }

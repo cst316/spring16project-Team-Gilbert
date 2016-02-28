@@ -404,7 +404,7 @@ public class EventDialog extends JDialog implements WindowListener {
             }
         });
         disableElements();
-        ((JSpinner.DateEditor) timeSpin.getEditor()).getFormat().applyPattern("HH:mm");
+        ((JSpinner.DateEditor) timeSpin.getEditor()).getFormat().applyLocalizedPattern("hh:mm a");;
         enableEndDateCB_actionPerformed(null);
         
     }

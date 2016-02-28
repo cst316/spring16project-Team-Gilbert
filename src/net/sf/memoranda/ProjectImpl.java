@@ -8,18 +8,22 @@
  */
 package net.sf.memoranda;
 
+import java.util.Date;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.AgendaPanel;
 import nu.xom.Attribute;
 import nu.xom.Element;
 
+// snesmith: updated to make a project countdown timer.
 /**
  * Default implementation of Project interface
  */
 /*$Id: ProjectImpl.java,v 1.7 2004/11/22 10:02:37 alexeya Exp $*/
 public class ProjectImpl implements Project {
 
-    private Element _root = null;
+    private static Element _root = null;
+    private static String endPRDate = "";
 
     /**
      * Constructor for ProjectImpl.
@@ -60,6 +64,15 @@ public class ProjectImpl implements Project {
         if (d == null) return null;
         return new CalendarDate(d.getValue());
     }
+    
+    public void setPREndDate(String endDate)  
+    {
+    	endPRDate = endDate;
+    }
+    
+	public String getPREndDate() {
+        return endPRDate;
+    }
 
     /**
      * @see net.sf.memoranda.Project#setEndDate(net.sf.memoranda.util.CalendarDate)
@@ -69,6 +82,8 @@ public class ProjectImpl implements Project {
             setAttr("endDate", date.toString());
         else if (_root.getAttribute("endDate") != null)
             setAttr("endDate", null);
+        
+        AgendaPanel.projectTimer();
     }
 
     /**
@@ -180,7 +195,7 @@ public class ProjectImpl implements Project {
             desc.appendChild(s);    	
     	}
     }
-        
+
     /**
      * @see net.sf.memoranda.Project#getTaskList()
      */

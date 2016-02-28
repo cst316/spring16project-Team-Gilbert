@@ -21,9 +21,9 @@ import net.sf.memoranda.util.Util;
 /*$Id: CalendarDate.java,v 1.3 2004/01/30 12:17:41 alexeya Exp $*/
 public class CalendarDate {
 
-    private int _year;
-    private int _month;
-    private int _day;
+    private static int _year;
+    private static int _month;
+    private static int _day;
 
     public static Calendar dateToCalendar(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -104,7 +104,7 @@ public class CalendarDate {
         return toCalendar(_day, _month, _year);
     }
 
-    public Date getDate() {
+    public static Date getDate() {
         return toDate(_day, _month, _year);
     }
 

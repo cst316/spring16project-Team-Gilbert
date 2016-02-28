@@ -4,18 +4,28 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.JOptionPane;
@@ -27,6 +37,7 @@ import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.History;
 import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
+import net.sf.memoranda.ProjectImpl;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ProjectManager;
 import net.sf.memoranda.ResourcesList;
@@ -39,18 +50,26 @@ import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
 import nu.xom.Element;
-
+import java.lang.Object;
+import java.lang.*;
+// snesmith: updated to make a project countdown timer.
 /*$Id: AgendaPanel.java,v 1.11 2005/02/15 16:58:02 rawsushi Exp $*/
 public class AgendaPanel extends JPanel {
+	private static  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
 	BorderLayout borderLayout1 = new BorderLayout();
 	JButton historyBackB = new JButton();
-	JToolBar toolBar = new JToolBar();
+	static JToolBar toolBar = new JToolBar();
 	JButton historyForwardB = new JButton();
 	JButton export = new JButton();
 	JEditorPane viewer = new JEditorPane("text/html", "");
 	String[] priorities = {"Muy Alta","Alta","Media","Baja","Muy Baja"};
 	JScrollPane scrollPane = new JScrollPane();
-
+	static JLabel timerField;
+	static Timer timer;
+	static Date timerStart;
+	static Date timerEnd;
+	static Long timeCount;
+	
 	DailyItemsPanel parentPanel = null;
 
 	//	JPopupMenu agendaPPMenu = new JPopupMenu();
@@ -192,24 +211,18 @@ public class AgendaPanel extends JPanel {
 					}else if (d.startsWith("memoranda:exportstickerst")) {
 						 /*  Falta agregar el exportar sticker mientras tanto..*/
 						 final JFrame parent = new JFrame();
-						 // Changed Spanish export message to English
-						 // Ricky Lind 2/1/2016
-						 String name = JOptionPane.showInputDialog(parent,Local.getString("Enter file name to export"),null);
+						 String name = JOptionPane.showInputDialog(parent,Local.getString("Ingrese nombre de archivo a exportar"),null);
 						 new ExportSticker(name).export("txt");
 						 //JOptionPane.showMessageDialog(null,name);
 					}else if (d.startsWith("memoranda:exportstickersh")) {
 						 /*  Falta agregar el exportar sticker mientras tanto..*/
 						 final JFrame parent = new JFrame();
-						 // Changed Spanish export message to English
-						 // Ricky Lind 2/1/2016
-						 String name = JOptionPane.showInputDialog(parent,Local.getString("Enter file name to export"),null);
+						 String name = JOptionPane.showInputDialog(parent,Local.getString("Ingrese nombre de archivo a exportar"),null);
 						 new ExportSticker(name).export("html");
 						 //JOptionPane.showMessageDialog(null,name);
 					}else if (d.startsWith("memoranda:importstickers")) {
 						final JFrame parent = new JFrame();
-						 // Changed Spanish import message to English
-						 // Ricky Lind 2/1/2016
-						String name = JOptionPane.showInputDialog(parent,Local.getString("Enter file name to import"),null);
+						String name = JOptionPane.showInputDialog(parent,Local.getString("Ingrese nombre de archivo a importar"),null);
 						new ImportSticker(name).import_file();
 					}
 				}
@@ -234,7 +247,8 @@ public class AgendaPanel extends JPanel {
 		historyForwardB.setMinimumSize(new Dimension(24, 24));
 		historyForwardB.setMaximumSize(new Dimension(24, 24));
 		historyForwardB.setText("");
-
+		
+		
 		this.setLayout(borderLayout1);
 		scrollPane.getViewport().setBackground(Color.white);
 
@@ -243,8 +257,14 @@ public class AgendaPanel extends JPanel {
 		toolBar.add(historyBackB, null);
 		toolBar.add(historyForwardB, null);
 		toolBar.addSeparator(new Dimension(8, 24));
-
 		this.add(toolBar, BorderLayout.NORTH);
+		
+		// snesmith: added counter on top right for project countdown
+		toolBar.addSeparator(new Dimension(1500, 24));
+		timerField = new JLabel("Hours left: " + timeCount());
+		timerField.setPreferredSize(new Dimension(1000, 24));
+		toolBar.add(timerField, BorderLayout.EAST);
+		
 
 		CurrentDate.addDateListener(new DateListener() {
 			public void dateChange(CalendarDate d) {
@@ -294,9 +314,41 @@ public class AgendaPanel extends JPanel {
 		//			(Context.get("SHOW_ACTIVE_TASKS_ONLY") != null)
 		//				&& (Context.get("SHOW_ACTIVE_TASKS_ONLY").equals("true"));
 		//		ppShowActiveOnlyChB.setSelected(isShao);
-		//		toggleShowActiveOnly_actionPerformed(null);		
 	}
 
+	/*
+	 * created by snesmith
+	 * used to get the timer start and end by taking today's date and time and
+	 * taking end of project's date and time and getting the difference.
+	 */
+	public static Long timeCount(){
+		try {
+		timerStart = Calendar.getInstance().getTime();;
+		CurrentProject.get().getEndDate();
+		timerEnd = CalendarDate.getDate();
+		System.out.println(timerEnd);
+		System.out.println(timerStart);
+		timeCount =  Math.round((timerEnd.getTime() - (timerStart.getTime()))/ (double) (1000 * 60 * 60));
+		}
+		catch (Exception e) {
+			System.out.println("No project end date.");
+		}
+		return timeCount;
+	}
+	
+	/*
+	 * created by snesmith
+	 * used to create and start a timer counting down by 1 hour
+	 */
+	public static void projectTimer(){
+		toolBar.remove(timerField);
+		timerField = new JLabel("Hours left: " + timeCount());
+		toolBar.add(timerField);
+		TimeClass tc = new TimeClass(timeCount());
+		timer = new Timer (3600000, (ActionListener) tc);
+		timer.start();
+		}
+	
 	public void refresh(CalendarDate date) {
 		viewer.setText(AgendaGenerator.getAgenda(date,expandedTasks));
 		SwingUtilities.invokeLater(new Runnable() {
@@ -315,7 +367,7 @@ public class AgendaPanel extends JPanel {
 	public void setActive(boolean isa) {
 		isActive = isa;
 	}
-
+	
 	//	void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
 	//		Context.put(
 	//			"SHOW_ACTIVE_TASKS_ONLY",
