@@ -442,16 +442,13 @@ public class AgendaGenerator {
 	/*
     we do not need this. Tasks are sorted using the Comparable interface
     public static class TaskSorter {
-
         static final int BY_IMP_RATE = 0;
         static final int BY_END_DATE = 1;
         static final int BY_PRIORITY = 2;
         static final int BY_COMPLETION = 3;
-
         private static Vector tasks = null;
         private static CalendarDate date = null;
         private static int mode = 0;
-
         public static long calcTaskRate(Task t, CalendarDate d) {
             /*
 	 * A "Task rate" is an informal index of importance of the task
@@ -467,7 +464,6 @@ public class AgendaGenerator {
             if (numOfDays < 0) return -1; //Something wrong ?
             return (100-t.getProgress()) / (numOfDays+1) * (t.getPriority()+1);
         }
-
         static long getRate(Object task) {
             Task t = (Task)task;
             switch (mode) {
@@ -478,7 +474,6 @@ public class AgendaGenerator {
             }
             return -1;
         }
-
         private static void doSort(int L, int R) { // Hoar's QuickSort
             int i = L;
             int j = R;
@@ -503,7 +498,6 @@ public class AgendaGenerator {
             if (i < R)
                 doSort(i, R);
         }
-
         public static void sort(Vector theTasks, CalendarDate theDate, int theMode) {
             if (theTasks == null) return;
             if (theTasks.size() <= 1) return;
@@ -512,7 +506,6 @@ public class AgendaGenerator {
             mode = theMode;
             doSort(0, tasks.size() - 1);
         }
-
     }
 	 */
 }

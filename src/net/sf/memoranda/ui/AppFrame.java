@@ -424,10 +424,10 @@ public class AppFrame extends JFrame {
         jMenuFormatTable.setText(Local.getString("Table"));
         jMenuFormatTableInsR.setText(Local.getString("Insert row"));
         jMenuFormatTableInsC.setText(Local.getString("Insert cell"));
-        jMenuFormatProperties.setText(Local.getString("Object properties")
-                + "...");
-        jMenuFormatProperties.setToolTipText(Local.getString(
-                "Object properties"));
+       jMenuFormatProperties.setText(Local.getString("Object properties")
+              + "...");
+       jMenuFormatProperties.setToolTipText(Local.getString(
+               "Object properties"));
 
         jMenuGo.setText(Local.getString("Go"));
         jMenuGoHBack.setText(Local.getString("History back"));
