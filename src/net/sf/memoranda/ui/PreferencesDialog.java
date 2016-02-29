@@ -51,10 +51,6 @@ public class PreferencesDialog extends JDialog {
 	// Ricky Lind 2/1/2016
 	JRadioButton lfAddedRB = new JRadioButton();
 
-	// Added another button for Look and Feel
-	// Ricky Lind 2/1/2016
-	JRadioButton lfAddedRB = new JRadioButton();
-
 	JRadioButton lfJavaRB = new JRadioButton();
 
 	JRadioButton lfCustomRB = new JRadioButton();
@@ -1000,17 +996,6 @@ public class PreferencesDialog extends JDialog {
 	void lfSystemRB_actionPerformed(ActionEvent e) {
 		this.enableCustomLF(false);
 
-	}
-
-	void askConfirmChB_actionPerformed(ActionEvent e) {
-
-	}
-
-	// Added the below statement to gray out the Custom
-	// L&F text box when CustomeRB is not selected
-	// Ricky Lind 2/1/2016
-	void lfAddedRB_actionPerformed(ActionEvent e) {
-		this.enableCustomLF(false);
 	}
 
 	// Added the below statement to gray out the Custom
