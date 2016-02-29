@@ -51,6 +51,10 @@ public class PreferencesDialog extends JDialog {
 	// Ricky Lind 2/1/2016
 	JRadioButton lfAddedRB = new JRadioButton();
 
+	// Added another button for Look and Feel
+	// Ricky Lind 2/1/2016
+	JRadioButton lfAddedRB = new JRadioButton();
+
 	JRadioButton lfJavaRB = new JRadioButton();
 
 	JRadioButton lfCustomRB = new JRadioButton();
@@ -217,6 +221,7 @@ public class PreferencesDialog extends JDialog {
 
 
 		/*************** START GENERAL TAB **************/
+
 		jPanel2.setLayout(borderLayout2);
 		soundPanel.add(jPanel2, BorderLayout.CENTER);
 		jPanel2.add(jPanel1, BorderLayout.NORTH);
@@ -314,6 +319,7 @@ public class PreferencesDialog extends JDialog {
 			}
 		});
 
+
 		/********* Window Close Action End **********/
 
 		/*********** Look and Feel Start ************/
@@ -343,6 +349,7 @@ public class PreferencesDialog extends JDialog {
 		// Added new button, gave it a label, fixed button so that
 		// if it is selected it will gray out the Custom L&F input
 		// box, fixed lfGroup so only one button can be selected at
+
 		// a time.
 		// Ricky Lind 2/1/2016
 		GeneralPanel.add(lfJavaRB, gbc);
@@ -373,7 +380,9 @@ public class PreferencesDialog extends JDialog {
 		gbc.anchor = GridBagConstraints.WEST;
 		// 1. Added new button, gave it a label, fixed button so that
 		//    if it is selected it will gray out the Custom L&F input
+
 		//    box, fixed lfGroup so only one button can be selected at
+
 		//    a time.
 		// 2. Changed button title to Mirror System
 		// Ricky Lind 2/1/2016
@@ -401,6 +410,7 @@ public class PreferencesDialog extends JDialog {
 		// 1. Added new button, gave it a label, fixed button so that
 		//    if it is selected it will gray out the Custom L&F input
 		//    box, fixed lfGroup so only one button can be selected at
+
 		//    a time.
 		// 2. Changed button title to Motif.
 		// Ricky Lind 2/1/2016
@@ -412,7 +422,6 @@ public class PreferencesDialog extends JDialog {
 		       lfAddedRB_actionPerformed(e);
 		   }
 		});
-
 		// Custom Button
 		lfGroup.add(lfCustomRB);
 		lfCustomRB.setText(Local.getString("Custom"));
@@ -450,8 +459,6 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(lfClassName, gbc);
 		jLabel4.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel4.setText(Local.getString("Startup:"));
-
-
 
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
@@ -581,7 +588,6 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 10, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(askConfirmChB, gbc);
-
 		/*************** END GENERAL TAB **************/
 
 		// Build Tab2
@@ -725,6 +731,7 @@ public class PreferencesDialog extends JDialog {
 			this.closeExitRB.setSelected(true);
 			// this.askConfirmChB.setEnabled(true);
 		}
+
 		else {
 			this.closeHideRB.setSelected(true);
 			// this.askConfirmChB.setEnabled(false);
@@ -991,6 +998,18 @@ public class PreferencesDialog extends JDialog {
 	}
 
 	void lfSystemRB_actionPerformed(ActionEvent e) {
+		this.enableCustomLF(false);
+
+	}
+
+	void askConfirmChB_actionPerformed(ActionEvent e) {
+
+	}
+
+	// Added the below statement to gray out the Custom
+	// L&F text box when CustomeRB is not selected
+	// Ricky Lind 2/1/2016
+	void lfAddedRB_actionPerformed(ActionEvent e) {
 		this.enableCustomLF(false);
 	}
 

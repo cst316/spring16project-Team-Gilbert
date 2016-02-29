@@ -73,6 +73,7 @@ public class App {
 				 *     programs appearance
 				 *  Ricky Lind
 				 */
+
 				UIManager.setLookAndFeel(
 					"com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 					//UIManager.getSystemLookAndFeelClassName());
