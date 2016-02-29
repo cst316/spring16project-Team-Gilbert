@@ -837,6 +837,10 @@ public class PreferencesDialog extends JDialog {
 			Configuration.put("ON_MINIMIZE", "hide");
 
 		String lf = Configuration.get("LOOK_AND_FEEL").toString();
+		String oldUser = Configuration.get("USERNAME").toString();
+		String oldPass = Configuration.get("PASSWORD").toString();
+		String newUser = "";
+		String newPass = "";
 		String newlf = "";
 
 		// Added in an additional else if statement to account for the added
@@ -855,6 +859,18 @@ public class PreferencesDialog extends JDialog {
 		// include "java" and "added." Look and Feel buttons now work and
 		// the settings are saved in the .properties file.
 		// Ricky Lind 2/14/16
+
+		newUser = this.prefUsername.getText();
+		newPass = this.prefPassword.getText();
+
+		if (!oldUser.equalsIgnoreCase(newUser)){
+			Configuration.put("USERNAME", newUser);
+		}
+
+		if (!oldPass.equalsIgnoreCase(newPass)){
+			Configuration.put("PASSWORD", newPass);
+		}
+
 		if (!lf.equalsIgnoreCase(newlf)) {
 			Configuration.put("LOOK_AND_FEEL", newlf);
 			try {
