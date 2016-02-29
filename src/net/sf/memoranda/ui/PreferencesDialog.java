@@ -152,6 +152,10 @@ public class PreferencesDialog extends JDialog {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	/****************** START SOUND TAB ****************/
+>>>>>>> US-34
 =======
 	/****************** START SOUND TAB ****************/
 >>>>>>> US-34
@@ -161,6 +165,7 @@ public class PreferencesDialog extends JDialog {
 				.getString("Sound"));
 		this.setResizable(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		// Build Tab1
 		jLabel1.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel1.setText(Local.getString("Window minimize action:"));
@@ -169,6 +174,9 @@ public class PreferencesDialog extends JDialog {
 		gbc.gridy = 0;
 		gbc.insets = new Insets(10, 10, 0, 15);
 		gbc.anchor = GridBagConstraints.EAST;
+=======
+		
+>>>>>>> US-34
 =======
 		
 >>>>>>> US-34
@@ -209,11 +217,17 @@ public class PreferencesDialog extends JDialog {
 			}
 		});
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> US-34
 		/***************** END SOUND TAB ****************/	
 		
 		
 		/*************** START GENERAL TAB **************/		
+<<<<<<< HEAD
+>>>>>>> US-34
+=======
 >>>>>>> US-34
 		jPanel2.setLayout(borderLayout2);
 		soundPanel.add(jPanel2, BorderLayout.CENTER);
@@ -791,6 +805,7 @@ public class PreferencesDialog extends JDialog {
 							.getSystemLookAndFeelClassName());
 				}
 				else if (Configuration.get("LOOK_AND_FEEL").equals("java")) {
+<<<<<<< HEAD
 					UIManager.setLookAndFeel(UIManager
 							.getCrossPlatformLookAndFeelClassName());
 				}
@@ -798,6 +813,15 @@ public class PreferencesDialog extends JDialog {
 					UIManager.setLookAndFeel(UIManager
 							.getCrossPlatformLookAndFeelClassName());
 				}
+=======
+					UIManager.setLookAndFeel(UIManager
+							.getCrossPlatformLookAndFeelClassName());
+				}
+				else if (Configuration.get("LOOK_AND_FEEL").equals("added")) {
+					UIManager.setLookAndFeel(UIManager
+							.getCrossPlatformLookAndFeelClassName());
+				}
+>>>>>>> US-34
 				else if (Configuration.get("LOOK_AND_FEEL").toString().length() > 0) {
 					UIManager.setLookAndFeel(Configuration.get("LOOK_AND_FEEL")
 							.toString());
