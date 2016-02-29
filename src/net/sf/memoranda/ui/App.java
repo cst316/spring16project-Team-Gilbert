@@ -168,11 +168,11 @@ public class App {
 	
 	// 1. Added new method for minimizing the window
 	//    to the taskbar rather than just closing it.
-	public static void minimizeWindow() {
-		if (frame == null)
-			return;
-		frame.setState (Frame.ICONIFIED);
-	}
+//	public static void minimizeWindow() {
+//		if (frame == null)
+//			return;
+//		frame.setState (Frame.ICONIFIED);
+//	}
 
 	// 1. Added new method for minimizing the window
 	//    to the taskbar rather than just closing it.

@@ -16,18 +16,12 @@ String name;
         	/*
             We are working on this =)
              */
-                
-<<<<<<< HEAD
+
         	    //Changed error message from Spanish to English
         	    //Ricky Lind 2/1/16
                 JOptionPane.showMessageDialog(null,Local.getString("Import Failed"));
                 return true;
-=======
-        	//Changed error message from Spanish to English
-        	//Ricky Lind 2/1/16
-            JOptionPane.showMessageDialog(null,Local.getString("Import Failed"));
-            return true;
->>>>>>> US-9
+
         }
         
         public boolean export_file() {
