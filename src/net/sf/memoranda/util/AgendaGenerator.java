@@ -1,3 +1,4 @@
+
 /*
  * AgendaGenerator.java Package: net.sf.memoranda.util Created on 13.01.2004
  * 5:52:54 @author Alex
@@ -375,7 +376,14 @@ public class AgendaGenerator {
 				.class
 				.getResource("resources/agenda/removesticker.gif")
 				.toExternalForm();
-		 String s = "<hr><hr><table border=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td><a href=\"memoranda:importstickers\"><b>"+Local.getString("Importar anotaci�n")+"</b></a></td><td><a href=\"memoranda:exportstickerst\"><b>"+Local.getString("Exportar anotaci�n como .txt")+"</b></a><td><a href=\"memoranda:exportstickersh\"><b>"+Local.getString("Exportar anotaci�n como .html")+"</b></a></td></tr></table>"
+		 // Converted Spanish buttons to English
+		 // Added height to string s
+		 // Entered <center> statements to center text within buttons
+		 // Ricky Lind 2/1/2016
+		 String s = "<hr><hr><table border=\"0\" cellpadding=\"0\" width=\"100%\" height=\"8%\"><tr><td><a href=\"memoranda:importstickers\"><b><center>"
+				    +Local.getString("Import File")+"</b></a></td><td><a href=\"memoranda:exportstickerst\"><b><center>"
+				    +Local.getString("Export file as .txt")+"</b></a><td><a href=\"memoranda:exportstickersh\"><b><center>"
+				    +Local.getString("Export file as .html")+"</b></a></td></tr></table>"
 				 +   "<table border=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td><a href=\"memoranda:addsticker\"><img align=\"left\" width=\"22\" height=\"22\" src=\""
 				 + iurl
 				+ "\" border=\"0\"  hspace=\"0\" vspace=\"0\" alt=\"New sticker\"></a></td><td width=\"100%\"><a href=\"memoranda:addsticker\"><b>&nbsp;"
@@ -435,16 +443,13 @@ public class AgendaGenerator {
 	/*
     we do not need this. Tasks are sorted using the Comparable interface
     public static class TaskSorter {
-
         static final int BY_IMP_RATE = 0;
         static final int BY_END_DATE = 1;
         static final int BY_PRIORITY = 2;
         static final int BY_COMPLETION = 3;
-
         private static Vector tasks = null;
         private static CalendarDate date = null;
         private static int mode = 0;
-
         public static long calcTaskRate(Task t, CalendarDate d) {
             /*
 	 * A "Task rate" is an informal index of importance of the task
@@ -460,7 +465,6 @@ public class AgendaGenerator {
             if (numOfDays < 0) return -1; //Something wrong ?
             return (100-t.getProgress()) / (numOfDays+1) * (t.getPriority()+1);
         }
-
         static long getRate(Object task) {
             Task t = (Task)task;
             switch (mode) {
@@ -471,7 +475,6 @@ public class AgendaGenerator {
             }
             return -1;
         }
-
         private static void doSort(int L, int R) { // Hoar's QuickSort
             int i = L;
             int j = R;
@@ -496,7 +499,6 @@ public class AgendaGenerator {
             if (i < R)
                 doSort(i, R);
         }
-
         public static void sort(Vector theTasks, CalendarDate theDate, int theMode) {
             if (theTasks == null) return;
             if (theTasks.size() <= 1) return;
@@ -505,7 +507,6 @@ public class AgendaGenerator {
             mode = theMode;
             doSort(0, tasks.size() - 1);
         }
-
     }
 	 */
 }

@@ -76,6 +76,7 @@ public class AppFrame extends JFrame {
     ImageIcon image1;
     ImageIcon image2;
     ImageIcon image3;
+    
     JLabel statusBar = new JLabel();
     BorderLayout borderLayout1 = new BorderLayout();
     JSplitPane splitPane = new JSplitPane();
@@ -664,9 +665,21 @@ public class AppFrame extends JFrame {
         System.exit(0);
     }
 
-    public void doMinimize() {
+    // 1. Changed the name of this method from "doMinimize"
+    //    to "doHide" because it does not execute the correct
+    //    method in App.java to be considered a minimize.
+    // Ricky Lind 2/14/16
+    public void doHide() {
         exitNotify();
         App.closeWindow();
+    }
+    
+    // 1. Added a new method that will allow certain
+    //    actions to execute the new minimizeWindow
+    //    method located in App.java.
+    // Ricky Lind 2/14/16
+    public void doMinimize() {
+        App.minimizeWindow();
     }
 
     //Help | About action performed
@@ -681,17 +694,24 @@ public class AppFrame extends JFrame {
     }
 
     protected void processWindowEvent(WindowEvent e) {
+    	// 1. Changed the doMinimize to doHide.
+    	// Ricky Lind 2/14/16
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
             if (Configuration.get("ON_CLOSE").equals("exit"))
                 doExit();
             else
+                doHide();
+        }
+        // 1. Added an "if/else" statement to check the ON_MINIMIZE
+        //    configuration and act accordingly.
+        // Ricky Lind 2/14/16
+        else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {            
+            if (Configuration.get("ON_MINIMIZE").equals("normal"))
                 doMinimize();
+            else
+                doHide();
         }
-        else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
-            super.processWindowEvent(new WindowEvent(this,
-                    WindowEvent.WINDOW_CLOSING));
-            doMinimize();
-        }
+
         else
             super.processWindowEvent(e);
     }
