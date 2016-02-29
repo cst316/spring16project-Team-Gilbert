@@ -7,10 +7,12 @@ import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.MimeTypesList;
+
 import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
+
 import java.awt.event.*;
 
 /*$Id: PreferencesDialog.java,v 1.16 2006/06/28 22:58:31 alexeya Exp $*/
@@ -675,7 +677,14 @@ public class PreferencesDialog extends JDialog {
 		okB.setText(Local.getString("Ok"));
 		okB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				okB_actionPerformed(e);
+				try {
+					okB_actionPerformed(e);
+				} catch (ClassNotFoundException | InstantiationException
+						| IllegalAccessException
+						| UnsupportedLookAndFeelException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		this.getRootPane().setDefaultButton(okB);
@@ -819,7 +828,7 @@ public class PreferencesDialog extends JDialog {
 			baseFontSize.setValue(new Integer(16));
 	}
 
-	void apply() {
+	void apply() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		if (this.firstdow.isSelected())
 			Configuration.put("FIRST_DAY_OF_WEEK", "mon");
 		else
@@ -934,11 +943,25 @@ public class PreferencesDialog extends JDialog {
 				 * Ricky Lind
 				 */
 				 { if (Configuration.get("LOOK_AND_FEEL").equals("added")) {
-					UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+					try {
+						UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+					} catch (ClassNotFoundException | InstantiationException
+							| IllegalAccessException
+							| UnsupportedLookAndFeelException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} 
 				 { if (Configuration.get("LOOK_AND_FEEL").toString().length() > 0) {
-					UIManager.setLookAndFeel(Configuration.get("LOOK_AND_FEEL")
-							.toString());
+					try {
+						UIManager.setLookAndFeel(Configuration.get("LOOK_AND_FEEL")
+								.toString());
+					} catch (ClassNotFoundException | InstantiationException
+							| IllegalAccessException
+							| UnsupportedLookAndFeelException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} 
 
 				SwingUtilities.updateComponentTreeUI(App.getFrame());
@@ -980,7 +1003,7 @@ public class PreferencesDialog extends JDialog {
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.initCSS();
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.repaint();
 
-		Configuration.saveConfig(); 
+		Configuration.saveConfig(); }}
 
 	
 
@@ -1007,7 +1030,7 @@ public class PreferencesDialog extends JDialog {
 
 	}
 
-	void okB_actionPerformed(ActionEvent e) {
+	void okB_actionPerformed(ActionEvent e) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		apply();
 		this.dispose();
 	}
