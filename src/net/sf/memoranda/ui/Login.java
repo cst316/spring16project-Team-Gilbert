@@ -1,10 +1,16 @@
 package net.sf.memoranda.ui;
 
+import net.sf.memoranda.util.Configuration;
+
 public class Login{
     public static boolean authenticate(String username, String password){
-        if (username.equals("user") && password.equals("password")) {
+        String user = Configuration.get("USERNAME").toString();
+        String pass = Configuration.get("PASSWORD").toString();
+
+        if (username.equals(user) && password.equals(pass)) {
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }

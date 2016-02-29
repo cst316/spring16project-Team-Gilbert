@@ -68,11 +68,12 @@ public class App {
 				UIManager.setLookAndFeel(
 					UIManager.getCrossPlatformLookAndFeelClassName());
 			else if (Configuration.get("LOOK_AND_FEEL").equals("added"))
-				/** 
+				/**
 				 *  1. Made the added Look and Feel button change the
 				 *     programs appearance
 				 *  Ricky Lind
-				 */ 
+				 */
+
 				UIManager.setLookAndFeel(
 
 					"com.sun.java.swing.plaf.motif.MotifLookAndFeel");
@@ -120,6 +121,9 @@ public class App {
 		// loginForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// loginForm.setSize(400,300);
 
+		String user = Configuration.get("USERNAME").toString();
+        String pass = Configuration.get("PASSWORD").toString();
+
 		LoginForm loginForm = new LoginForm(frame);
 		loginForm.setVisible(true);
 		if(loginForm.isSucceeded()){
@@ -133,6 +137,9 @@ public class App {
 		} else{
 			splash.dispose();
 		}
+
+
+
 	}
 
 	void init() {
@@ -157,6 +164,14 @@ public class App {
 		if (frame == null)
 			return;
 		frame.dispose();
+	}
+	
+	// 1. Added new method for minimizing the window
+	//    to the taskbar rather than just closing it.
+	public static void minimizeWindow() {
+		if (frame == null)
+			return;
+		frame.setState (Frame.ICONIFIED);
 	}
 
 	// 1. Added new method for minimizing the window
