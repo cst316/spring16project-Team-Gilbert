@@ -151,11 +151,16 @@ public class PreferencesDialog extends JDialog {
 		this(null);
 	}
 
+<<<<<<< HEAD
+=======
+	/****************** START SOUND TAB ****************/
+>>>>>>> US-34
 	void jbInit() throws Exception {
 		titledBorder1 = new TitledBorder(BorderFactory.createEtchedBorder(
 				Color.white, new Color(156, 156, 158)), Local
 				.getString("Sound"));
 		this.setResizable(false);
+<<<<<<< HEAD
 		// Build Tab1
 		jLabel1.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel1.setText(Local.getString("Window minimize action:"));
@@ -164,6 +169,9 @@ public class PreferencesDialog extends JDialog {
 		gbc.gridy = 0;
 		gbc.insets = new Insets(10, 10, 0, 15);
 		gbc.anchor = GridBagConstraints.EAST;
+=======
+		
+>>>>>>> US-34
 		enableSoundCB.setText(Local.getString("Enable sound notifications"));
 		enableSoundCB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -200,6 +208,13 @@ public class PreferencesDialog extends JDialog {
 				soundCustomRB_actionPerformed(e);
 			}
 		});
+<<<<<<< HEAD
+=======
+		/***************** END SOUND TAB ****************/	
+		
+		
+		/*************** START GENERAL TAB **************/		
+>>>>>>> US-34
 		jPanel2.setLayout(borderLayout2);
 		soundPanel.add(jPanel2, BorderLayout.CENTER);
 		jPanel2.add(jPanel1, BorderLayout.NORTH);
@@ -213,6 +228,24 @@ public class PreferencesDialog extends JDialog {
 		jPanel3.add(soundFile, BorderLayout.CENTER);
 		jPanel3.add(soundFileBrowseB, BorderLayout.EAST);
 		jPanel3.add(jLabel6, BorderLayout.WEST);
+		
+		/******** Window Minimize Action Start *********/
+		
+		// 1. Moved this label away from the sound options to it's proper
+		//    place in the code.
+		// 2. Fixed positioning of jLabel1.
+		// Ricky Lind 2/14/16
+		gbc = new GridBagConstraints();
+		gbc.insets = new Insets(10, 0, 0, 5);
+		gbc.anchor = GridBagConstraints.WEST;
+		jLabel1.setHorizontalAlignment(SwingConstants.RIGHT);
+		jLabel1.setText(Local.getString("Window minimize action:"));
+		
+		gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(10, 10, 0, 15);
+		gbc.anchor = GridBagConstraints.EAST;
 		GeneralPanel.add(jLabel1, gbc);
 		minGroup.add(minTaskbarRB);
 		minTaskbarRB.setSelected(true);
@@ -222,6 +255,7 @@ public class PreferencesDialog extends JDialog {
 				minTaskbarRB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -235,6 +269,11 @@ public class PreferencesDialog extends JDialog {
 				minHideRB_actionPerformed(e);
 			}
 		});
+		
+		/********* Window Minimize Action End **********/
+		
+		/******** Window Close Action Start *********/
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 1;
@@ -243,6 +282,7 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(minHideRB, gbc);
 		jLabel2.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel2.setText(Local.getString("Window close action:"));
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -257,13 +297,13 @@ public class PreferencesDialog extends JDialog {
 				closeExitRB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(closeExitRB, gbc);
-
 		closeGroup.add(closeHideRB);
 		closeHideRB.setText(Local.getString("Hide"));
 		closeHideRB.addActionListener(new java.awt.event.ActionListener() {
@@ -271,6 +311,11 @@ public class PreferencesDialog extends JDialog {
 				closeHideRB_actionPerformed(e);
 			}
 		});
+		
+		/********* Window Close Action End **********/
+		
+		/*********** Look and Feel Start ************/
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 3;
@@ -279,6 +324,7 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(closeHideRB, gbc);
 		jLabel3.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel3.setText(Local.getString("Look and feel:"));
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 4;
@@ -291,6 +337,26 @@ public class PreferencesDialog extends JDialog {
 		gbc.gridy = 4;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
+<<<<<<< HEAD
+=======
+		// Added new button, gave it a label, fixed button so that
+		// if it is selected it will gray out the Custom L&F input
+		// box, fixed lfGroup so only one button can be selected at 
+		// a time.
+		// Ricky Lind 2/1/2016
+		GeneralPanel.add(lfAddedRB, gbc);
+		lfGroup.add(lfAddedRB);
+		// 1. Added setSelected so the default Look and Feel will
+		//    be Look and feel 1.
+		// Ricky Lind 2/14/16
+		lfSystemRB.setSelected(true);
+		lfAddedRB.setText(Local.getString("Look and Feel 1"));
+		lfAddedRB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lfAddedRB_actionPerformed(e);
+			}
+		});
+>>>>>>> US-34
 
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
@@ -327,6 +393,9 @@ public class PreferencesDialog extends JDialog {
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(classNameLabel, gbc);
 		lfClassName.setEnabled(false);
+		
+		/************ Look and Feel End *************/
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 9;
@@ -336,6 +405,7 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(lfClassName, gbc);
 		jLabel4.setHorizontalAlignment(SwingConstants.RIGHT);
 		jLabel4.setText(Local.getString("Startup:"));
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 10;
@@ -348,6 +418,7 @@ public class PreferencesDialog extends JDialog {
 				enSystrayChB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 10;
@@ -355,6 +426,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(enSystrayChB, gbc);
 		startMinimizedChB.setText(Local.getString("Start minimized"));
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 11;
@@ -367,6 +439,7 @@ public class PreferencesDialog extends JDialog {
 				enSplashChB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 12;
@@ -379,6 +452,7 @@ public class PreferencesDialog extends JDialog {
 				enL10nChB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 13;
@@ -390,6 +464,7 @@ public class PreferencesDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 14;
@@ -398,6 +473,7 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(firstdow, gbc);
 		lblExit.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblExit.setText(Local.getString("Exit") + ":");
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 15;
@@ -411,13 +487,20 @@ public class PreferencesDialog extends JDialog {
 				askConfirmChB_actionPerformed(e);
 			}
 		});
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 15;
 		gbc.insets = new Insets(2, 0, 10, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(askConfirmChB, gbc);
+<<<<<<< HEAD
 
+=======
+		
+		/*************** END GENERAL TAB **************/	
+		
+>>>>>>> US-34
 		// Build Tab2
 		rstPanelBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		resourceTypePanel.setBorder(rstPanelBorder);
@@ -534,8 +617,11 @@ public class PreferencesDialog extends JDialog {
 				.equalsIgnoreCase("mon"));
 
 		enableCustomLF(false);
+		// Reworked entire logic so the program will remember what
+		// setting the user last selected.
+		// Ricky Lind 2/14/16
 		String lf = Configuration.get("LOOK_AND_FEEL").toString();
-		if (lf.equalsIgnoreCase("system"))
+		/*if (lf.equalsIgnoreCase("system"))
 			lfSystemRB.setSelected(true);
 		else if (lf.equalsIgnoreCase("default"))
 			lfJavaRB.setSelected(true);
@@ -544,21 +630,44 @@ public class PreferencesDialog extends JDialog {
 			enableCustomLF(true);
 			lfClassName.setText(lf);
 		} else
-			lfJavaRB.setSelected(true);
+			lfJavaRB.setSelected(true);*/
+		
+		if (lf.equals("system")) {
+			this.lfSystemRB.setSelected(true);
+		}
+		else if (lf.equals("java")) {
+			this.lfJavaRB.setSelected(true);
+		}
+		else if (lf.equals("added")) {
+			this.lfAddedRB.setSelected(true);
+		}
+		else {
+			this.lfCustomRB.setSelected(true);
+		}
 
-		askConfirmChB.setSelected(!Configuration.get("ASK_ON_EXIT").toString()
+ 		askConfirmChB.setSelected(!Configuration.get("ASK_ON_EXIT").toString()
 				.equalsIgnoreCase("no"));
+		
 		String onclose = Configuration.get("ON_CLOSE").toString();
 		if (onclose.equals("exit")) {
 			this.closeExitRB.setSelected(true);
 			// this.askConfirmChB.setEnabled(true);
-		} else {
+		} 
+		else {
 			this.closeHideRB.setSelected(true);
 			// this.askConfirmChB.setEnabled(false);
 		}
 
 		String onmin = Configuration.get("ON_MINIMIZE").toString();
-		this.minTaskbarRB.setSelected(true);
+		// 1. Setup if/else statement to check what the configuration
+		//    is for ON_MINIMIZE.
+		// Ricky Lind 2/14/16
+		if (onmin.equals("normal")) {
+			this.minTaskbarRB.setSelected(true);
+		} 
+		else {
+			this.minHideRB.setSelected(true);
+		}
 
 		if (!System.getProperty("os.name").startsWith("Win"))
 			this.browserPath.setText(MimeTypesList.getAppList()
@@ -644,31 +753,55 @@ public class PreferencesDialog extends JDialog {
 			Configuration.put("ON_CLOSE", "exit");
 		else
 			Configuration.put("ON_CLOSE", "minimize");
-
-		Configuration.put("ON_MINIMIZE", "normal");
-
+		
+		// Added missing if else statements for Minimize preferences
+		// options. This should should assist in allowing this preference
+		// setting writing to Configuration which will allow the preference
+		// to be remembered and not always default to "Minimize to Taskbar."
+		// Ricky Lind 2/14/16
+		if (this.minTaskbarRB.isSelected())
+			Configuration.put("ON_MINIMIZE", "normal");
+		else
+			Configuration.put("ON_MINIMIZE", "hide");
+		
 		String lf = Configuration.get("LOOK_AND_FEEL").toString();
 		String newlf = "";
 
+		// Added in an additional else if statement to account for the added
+		// RB.
+		// Ricky Lind 2/14/16
 		if (this.lfSystemRB.isSelected())
 			newlf = "system";
 		else if (this.lfJavaRB.isSelected())
-			newlf = "default";
+			newlf = "java";
+		else if (this.lfAddedRB.isSelected())
+			newlf = "added";
 		else if (this.lfCustomRB.isSelected())
 			newlf = this.lfClassName.getText();
 
+		// Reworked the Look and Feel logic and added else if statements to
+		// include "java" and "added." Look and Feel buttons now work and
+		// the settings are saved in the .properties file.
+		// Ricky Lind 2/14/16
 		if (!lf.equalsIgnoreCase(newlf)) {
 			Configuration.put("LOOK_AND_FEEL", newlf);
 			try {
-				if (Configuration.get("LOOK_AND_FEEL").equals("system"))
+				if (Configuration.get("LOOK_AND_FEEL").equals("system")) {
 					UIManager.setLookAndFeel(UIManager
 							.getSystemLookAndFeelClassName());
-				else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
+				}
+				else if (Configuration.get("LOOK_AND_FEEL").equals("java")) {
 					UIManager.setLookAndFeel(UIManager
 							.getCrossPlatformLookAndFeelClassName());
-				else if (Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+				}
+				else if (Configuration.get("LOOK_AND_FEEL").equals("added")) {
+					UIManager.setLookAndFeel(UIManager
+							.getCrossPlatformLookAndFeelClassName());
+				}
+				else if (Configuration.get("LOOK_AND_FEEL").toString().length() > 0) {
 					UIManager.setLookAndFeel(Configuration.get("LOOK_AND_FEEL")
 							.toString());
+				}
 
 				SwingUtilities.updateComponentTreeUI(App.getFrame());
 
@@ -757,12 +890,12 @@ public class PreferencesDialog extends JDialog {
 		// this.askConfirmChB.setEnabled(true);
 	}
 
-	void askConfirmChB_actionPerformed(ActionEvent e) {
-
-	}
-
 	void closeHideRB_actionPerformed(ActionEvent e) {
 		// this.askConfirmChB.setEnabled(false);
+	}
+	
+	void askConfirmChB_actionPerformed(ActionEvent e) {
+
 	}
 
 	void lfSystemRB_actionPerformed(ActionEvent e) {
