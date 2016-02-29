@@ -19,7 +19,9 @@ String name;
                   
                   */
                 
-                JOptionPane.showMessageDialog(null,Local.getString("Aun no podemos importar su documento"));
+        	    //Changed error message from Spanish to English
+        	    //Ricky Lind 2/1/16
+                JOptionPane.showMessageDialog(null,Local.getString("Import Failed"));
                 return true;
         }
         
