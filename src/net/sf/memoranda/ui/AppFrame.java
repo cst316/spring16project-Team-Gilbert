@@ -76,6 +76,7 @@ public class AppFrame extends JFrame {
     ImageIcon image1;
     ImageIcon image2;
     ImageIcon image3;
+    
     JLabel statusBar = new JLabel();
     BorderLayout borderLayout1 = new BorderLayout();
     JSplitPane splitPane = new JSplitPane();
