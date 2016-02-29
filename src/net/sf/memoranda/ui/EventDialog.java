@@ -350,7 +350,7 @@ public class EventDialog extends JDialog implements WindowListener {
         repeatPanel.add(dayOfMonthSpin, gbc);
         lblDoM.setText(Local.getString("day of month"));
         
-        everyNWorkingDayRB.setActionCommand("daily");
+        everyNWorkingDayRB.setActionCommand("Ndaily");
         everyNWorkingDayRB.setText(Local.getString("Every"));
         everyNWorkingDayRB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
