@@ -57,20 +57,37 @@ public class App {
 	public void startMenu(){
 		System.out.println(VERSION_INFO);
 		System.out.println(Configuration.get("LOOK_AND_FEEL"));
+		// 1. Making updates for new Look and Feel options.
+		// Ricky Lind
 		try {
 			if (Configuration.get("LOOK_AND_FEEL").equals("system"))
 				UIManager.setLookAndFeel(
+					//"com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 					UIManager.getSystemLookAndFeelClassName());
-			else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
+			else if (Configuration.get("LOOK_AND_FEEL").equals("java"))
 				UIManager.setLookAndFeel(
 					UIManager.getCrossPlatformLookAndFeelClassName());
-			else if (
-				Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+			else if (Configuration.get("LOOK_AND_FEEL").equals("added"))
+				/** 
+				 *  1. Made the added Look and Feel button change the
+				 *     programs appearance
+				 *  Ricky Lind
+				 */ 
+				UIManager.setLookAndFeel(
+
+					"com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+					//UIManager.getSystemLookAndFeelClassName());
+			else if (Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+
 				UIManager.setLookAndFeel(
 					Configuration.get("LOOK_AND_FEEL").toString());
 
 		} catch (Exception e) {
-			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", "Make sure that specified look-and-feel library classes are on the CLASSPATH.");
+
+			new ExceptionDialog(e, "Error when initializing a pluggable "
+					+ "look-and-feel. Default LF will be used.", "Make sure "
+					+ "that specified look-and-feel library classes are on the "
+					+ "CLASSPATH.");
 		}
 		if (Configuration.get("FIRST_DAY_OF_WEEK").equals("")) {
 			String fdow;
@@ -111,6 +128,7 @@ public class App {
 				init();
 			}
 			if (!Configuration.get("SHOW_SPLASH").equals("no"))
+
 			splash.dispose();
 		} else{
 			splash.dispose();
@@ -139,6 +157,14 @@ public class App {
 		if (frame == null)
 			return;
 		frame.dispose();
+	}
+
+	// 1. Added new method for minimizing the window
+	//    to the taskbar rather than just closing it.
+	public static void minimizeWindow() {
+		if (frame == null)
+			return;
+		frame.setState (Frame.ICONIFIED);
 	}
 
 	/**

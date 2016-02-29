@@ -207,14 +207,14 @@ public class HTMLEditor extends JPanel {
 		}
 	};
 
-	public Action propsAction =
-		new HTMLEditorAction(
-			Local.getString("Object properties"),
-			new ImageIcon(cl.getResource("resources/icons/properties.png"))) {
-		public void actionPerformed(ActionEvent e) {
-			propsActionB_actionPerformed(e);
-		}
-	};
+	//public Action propsAction =
+//		new HTMLEditorAction(
+//			Local.getString("Object properties"),
+//			new ImageIcon(cl.getResource("resources/icons/properties.png"))) {
+//		public void actionPerformed(ActionEvent e) {
+//			propsActionB_actionPerformed(e);
+//		}
+//	};
 
 	public Action selectAllAction =
 		new HTMLEditorAction(Local.getString("Select all")) {
@@ -454,7 +454,7 @@ public class HTMLEditor extends JPanel {
 	JButton olActionB = new JButton();
 	JButton linkActionB = new JButton();
 	JButton italicActionB = new JButton();
-	JButton propsActionB = new JButton();
+	//JButton propsActionB = new JButton();
 	JButton imageActionB = new JButton();
 
 	public final int T_P = 0;
@@ -521,7 +521,8 @@ public class HTMLEditor extends JPanel {
 	JMenuItem jMenuItemCut = new JMenuItem(cutAction);
 	JMenuItem jMenuItemCopy = new JMenuItem(copyAction);
 	JMenuItem jMenuItemPaste = new JMenuItem(pasteAction);
-	JMenuItem jMenuItemProp = new JMenuItem(propsAction);
+	//JMenuItem jMenuItemProp = new JMenuItem(propsAction);
+
 
 	JMenuItem jMenuItemInsCell = new JMenuItem(insertTableCellAction);
 	JMenuItem jMenuItemInsRow = new JMenuItem(insertTableRowAction);
@@ -724,13 +725,13 @@ public class HTMLEditor extends JPanel {
 		linkActionB.setFocusable(false);
 		linkActionB.setText("");
 
-		propsActionB.setAction(propsAction);
-		propsActionB.setFocusable(false);
-		propsActionB.setPreferredSize(new Dimension(22, 22));
-		propsActionB.setBorderPainted(false);
-		propsActionB.setMinimumSize(new Dimension(22, 22));
-		propsActionB.setMaximumSize(new Dimension(22, 22));
-		propsActionB.setText("");
+		//propsActionB.setAction(propsAction);
+	//	propsActionB.setFocusable(false);
+	//	propsActionB.setPreferredSize(new Dimension(22, 22));
+	//	propsActionB.setBorderPainted(false);
+	//	propsActionB.setMinimumSize(new Dimension(22, 22));
+	//	propsActionB.setMaximumSize(new Dimension(22, 22));
+	//	propsActionB.setText("");
 
 		imageActionB.setAction(imageAction);
 		imageActionB.setMaximumSize(new Dimension(22, 22));
@@ -802,7 +803,7 @@ public class HTMLEditor extends JPanel {
 		this.add(jScrollPane1, BorderLayout.CENTER);
 		this.add(editToolbar, BorderLayout.NORTH);
 
-		editToolbar.add(propsActionB, null);
+	//	editToolbar.add(propsActionB, null);
 		editToolbar.addSeparator();
 		editToolbar.add(blockCB, null);
 
@@ -995,7 +996,7 @@ public class HTMLEditor extends JPanel {
 					jMenuItemInsRow.setEnabled(true);
 					popupMenu.addSeparator();
 				}
-				popupMenu.add(jMenuItemProp);
+			  //popupMenu.add(jMenuItemProp);
 				popupMenu.show(e.getComponent(), e.getX(), e.getY());
 
 			}
@@ -1310,28 +1311,17 @@ public class HTMLEditor extends JPanel {
 				.getParentElement()
 				.getName();
 		HTML.Tag parentTag = HTML.getTag(parentname);
-		HTMLEditorKit.InsertHTMLTextAction ulAction =
-			new HTMLEditorKit.InsertHTMLTextAction(
-				"insertUL",
-				"<ul><li></li></ul>",
-				parentTag,
-				HTML.Tag.UL);
-		ulAction.actionPerformed(e);
-		//removeIfEmpty(document.getParagraphElement(editor.getCaretPosition()-1));
+		if(HTML.Tag.CONTENT != null){
+			HTMLEditorKit.InsertHTMLTextAction ulAction =
+				new HTMLEditorKit.InsertHTMLTextAction(
+					"insertUL",
+					"<ul><li></li></ul>",
+					parentTag,
+					HTML.Tag.UL);
+			ulAction.actionPerformed(e);
+		}
+		removeIfEmpty(document.getParagraphElement(editor.getCaretPosition()-1));
 		list = true;
-		/*
-		 * Element pEl =
-		 * document.getParagraphElement(editor.getCaretPosition());
-		 * StringWriter sw = new StringWriter(); try { editorKit.write(sw,
-		 * document, pEl.getStartOffset(),
-		 * pEl.getEndOffset()-pEl.getStartOffset()); String copy =
-		 * sw.toString(); String elName = pEl.getName(); copy =
-		 * copy.substring(copy.indexOf(" <"+elName)); copy =
-		 * copy.substring(0,copy.indexOf(" </"+elName)+elName.length()+3);
-		 * document.setOuterHTML(pEl, " <ul><li> "+copy+" </li></ul> ");
-		 * System.out.println(copy); } catch (Exception ex){
-		 * ex.printStackTrace();
-		 */
 
 	}
 
@@ -2068,7 +2058,7 @@ public class HTMLEditor extends JPanel {
 			(frmSize.width - dlgSize.width) / 2 + loc.x,
 			(frmSize.height - dlgSize.height) / 2 + loc.y);
 		dlg.setModal(true);
-		dlg.setTitle(Local.getString("Object properties"));
+		//dlg.setTitle(Local.getString("Object properties"));
 		dlg.idField.setText(id);
 		dlg.classField.setText(cls);
 		dlg.styleField.setText(sty);
