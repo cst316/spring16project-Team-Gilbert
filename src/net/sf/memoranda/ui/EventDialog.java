@@ -44,39 +44,55 @@ public class EventDialog extends JDialog implements WindowListener {
     public boolean CANCELLED = false;
     boolean ignoreStartChanged = false;
     boolean ignoreEndChanged = false;
+    
     JPanel topPanel = new JPanel(new BorderLayout());
     JPanel bottomPanel = new JPanel(new BorderLayout());
     JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    
     public JLabel header = new JLabel();
     JPanel eventPanel = new JPanel(new GridBagLayout());
     GridBagConstraints gbc;
     JLabel lblTime = new JLabel();
     public JSpinner timeSpin = new JSpinner(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
+    
     JLabel lblText = new JLabel();
     public JTextField textField = new JTextField();
-    TitledBorder repeatBorder;
+    
+    TitledBorder repeatBorder;    
     JPanel repeatPanel = new JPanel(new GridBagLayout());
+    
     public JRadioButton noRepeatRB = new JRadioButton();
-    public JRadioButton dailyRepeatRB = new JRadioButton();
+    
+    public JRadioButton dailyRepeatRB = new JRadioButton();    
     public JSpinner daySpin = new JSpinner(new SpinnerNumberModel(1,1,365,1));
     JLabel lblDays = new JLabel();
     JLabel lblSince = new JLabel();
+    
     public JSpinner startDate = new JSpinner(new SpinnerDateModel());
     JButton setStartDateB = new JButton();
+    
     public JRadioButton weeklyRepeatRB = new JRadioButton();
     public JComboBox weekdaysCB = new JComboBox(Local.getWeekdayNames());
     public JCheckBox enableEndDateCB = new JCheckBox();
 	public JCheckBox workingDaysOnlyCB = new JCheckBox();
     public JSpinner endDate = new JSpinner(new SpinnerDateModel());
     JButton setEndDateB = new JButton();
+    
     public JRadioButton monthlyRepeatRB = new JRadioButton();
     public JSpinner dayOfMonthSpin = new JSpinner(new SpinnerNumberModel(1,1,31,1));
     JLabel lblDoM = new JLabel();
+    
+    public JRadioButton everyNWorkingDayRB = new JRadioButton();
+    public JSpinner nWorkingDaySpin = new JSpinner(new SpinnerNumberModel(1,1,31,1));
+    JLabel lblNWorkingDay = new JLabel();
+    
     public JRadioButton yearlyRepeatRB = new JRadioButton();
     ButtonGroup repeatRBGroup = new ButtonGroup();
+    
     JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
     JButton okB = new JButton();
     JButton cancelB = new JButton();
+    
     CalendarFrame endCalFrame = new CalendarFrame();
     CalendarFrame startCalFrame = new CalendarFrame();
     private Date eventDate;
@@ -141,7 +157,7 @@ public class EventDialog extends JDialog implements WindowListener {
         repeatBorder = new TitledBorder(BorderFactory.createLineBorder(
         Color.gray, 1), Local.getString("Repeat"));
         repeatPanel.setBorder(repeatBorder);
-        noRepeatRB.setMaximumSize(new Dimension(80, 35));
+        noRepeatRB.setMaximumSize(new Dimension(160, 35));
         noRepeatRB.setSelected(true);
         noRepeatRB.setText(Local.getString("No repeat"));
         noRepeatRB.addActionListener(new java.awt.event.ActionListener() {
@@ -333,6 +349,39 @@ public class EventDialog extends JDialog implements WindowListener {
         gbc.anchor = GridBagConstraints.WEST;
         repeatPanel.add(dayOfMonthSpin, gbc);
         lblDoM.setText(Local.getString("day of month"));
+        
+        everyNWorkingDayRB.setActionCommand("Ndaily");
+        everyNWorkingDayRB.setText(Local.getString("Every"));
+        everyNWorkingDayRB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                nWorkingDay_actionPerformed(e);
+            }
+        });
+        
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 4;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+        repeatPanel.add(everyNWorkingDayRB, gbc);
+
+//        gbc = new GridBagConstraints();
+//        gbc.gridx = 0; gbc.gridy = 1;
+//        gbc.insets = new Insets(5, 5, 5, 0);
+//        gbc.anchor = GridBagConstraints.WEST;
+//        repeatPanel.add(everyNWorkingDayRB, gbc);
+        nWorkingDaySpin.setPreferredSize(new Dimension(50, 24));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1; gbc.gridy = 4;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+        repeatPanel.add(nWorkingDaySpin, gbc);
+        lblNWorkingDay.setText(Local.getString("working day"));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2; gbc.gridy = 4;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+        repeatPanel.add(lblNWorkingDay, gbc);
+        
         gbc = new GridBagConstraints();
         gbc.gridx = 2; gbc.gridy = 3;
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -346,9 +395,9 @@ public class EventDialog extends JDialog implements WindowListener {
 			}
 		});
 		gbc = new GridBagConstraints();
-		gbc.gridx = 0; gbc.gridy = 4;
+		gbc.gridx = 0; gbc.gridy = 5;
 		gbc.gridwidth = 5;
-		gbc.insets = new Insets(5, 5, 5, 10);
+		gbc.insets = new Insets(5, 5, 5, 15);
 		gbc.anchor = GridBagConstraints.WEST;
 		repeatPanel.add(yearlyRepeatRB, gbc);
         
@@ -357,6 +406,7 @@ public class EventDialog extends JDialog implements WindowListener {
         repeatRBGroup.add(weeklyRepeatRB);
         repeatRBGroup.add(monthlyRepeatRB);
         repeatRBGroup.add(yearlyRepeatRB);
+        repeatRBGroup.add(everyNWorkingDayRB);
         
         // Build ButtonsPanel
         okB.setMaximumSize(new Dimension(100, 26));
@@ -421,11 +471,13 @@ public class EventDialog extends JDialog implements WindowListener {
         enableEndDateCB.setEnabled(false);
 		enableEndDateCB.setSelected(false);
 		workingDaysOnlyCB.setEnabled(false);
-		workingDaysOnlyCB.setSelected(false);		
+		workingDaysOnlyCB.setSelected(false);
+		nWorkingDaySpin.setEnabled(false);
     }
     
     public void yearlyRepeatRB_actionPerformed(ActionEvent e) {
 		disableElements();
+		everyNWorkingDayRB.setSelected(false);
 		startDate.setEnabled(true);
 		setStartDateB.setEnabled(true);
 		lblSince.setEnabled(true);
@@ -437,6 +489,7 @@ public class EventDialog extends JDialog implements WindowListener {
 
     public void monthlyRepeatRB_actionPerformed(ActionEvent e) {
         disableElements();
+		everyNWorkingDayRB.setSelected(false);
         dayOfMonthSpin.setEnabled(true);
         startDate.setEnabled(true);
         setStartDateB.setEnabled(true);
@@ -449,6 +502,7 @@ public class EventDialog extends JDialog implements WindowListener {
 
     public void dailyRepeatRB_actionPerformed(ActionEvent e) {
         disableElements();
+		everyNWorkingDayRB.setSelected(false);
         daySpin.setEnabled(true);
         startDate.setEnabled(true);
         setStartDateB.setEnabled(true);
@@ -458,9 +512,26 @@ public class EventDialog extends JDialog implements WindowListener {
 		startDate.getModel().setValue(
 			startCalFrame.cal.get().getCalendar().getTime());        
     }
+    
+    public void nWorkingDay_actionPerformed(ActionEvent e) {
+        disableElements();
+        noRepeatRB.setSelected(false);
+        dailyRepeatRB.setSelected(false);
+        weeklyRepeatRB.setSelected(false);
+        monthlyRepeatRB.setSelected(false);
+        yearlyRepeatRB.setSelected(false);
+        nWorkingDaySpin.setEnabled(true);
+        startDate.setEnabled(true);
+        setStartDateB.setEnabled(true);
+        lblSince.setEnabled(true);
+        enableEndDateCB.setEnabled(true);
+		startDate.getModel().setValue(
+			startCalFrame.cal.get().getCalendar().getTime());        
+    }
 
     public void weeklyRepeatRB_actionPerformed(ActionEvent e) {
         disableElements();
+		everyNWorkingDayRB.setSelected(false);
         weekdaysCB.setEnabled(true);
         startDate.setEnabled(true);
         setStartDateB.setEnabled(true);

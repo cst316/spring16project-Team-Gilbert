@@ -74,13 +74,16 @@ public class App {
 				 *  Ricky Lind
 				 */ 
 				UIManager.setLookAndFeel(
+
 					"com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 					//UIManager.getSystemLookAndFeelClassName());
 			else if (Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+
 				UIManager.setLookAndFeel(
 					Configuration.get("LOOK_AND_FEEL").toString());
 
 		} catch (Exception e) {
+
 			new ExceptionDialog(e, "Error when initializing a pluggable "
 					+ "look-and-feel. Default LF will be used.", "Make sure "
 					+ "that specified look-and-feel library classes are on the "
@@ -125,6 +128,7 @@ public class App {
 				init();
 			}
 			if (!Configuration.get("SHOW_SPLASH").equals("no"))
+
 			splash.dispose();
 		} else{
 			splash.dispose();
