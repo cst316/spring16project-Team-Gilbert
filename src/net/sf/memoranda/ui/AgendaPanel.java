@@ -81,16 +81,23 @@ public class AgendaPanel extends JPanel {
 			public void hyperlinkUpdate(HyperlinkEvent e) {
 				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 					String d = e.getDescription();
-					if (d.equalsIgnoreCase("memoranda:events"))
+					
+					if (d.equalsIgnoreCase("memoranda:events")) {
 						parentPanel.alarmB_actionPerformed(null);
+					}
+					
 					else if (d.startsWith("memoranda:tasks")) {
 						String id = d.split("#")[1];
 						CurrentProject.set(ProjectManager.getProject(id));
 						parentPanel.taskB_actionPerformed(null);
-					} else if (d.startsWith("memoranda:project")) {
+					} 
+					
+					else if (d.startsWith("memoranda:project")) {
 						String id = d.split("#")[1];
 						CurrentProject.set(ProjectManager.getProject(id));
-					} else if (d.startsWith("memoranda:removesticker")) {
+					} 
+					
+					else if (d.startsWith("memoranda:removesticker")) {
                         String id = d.split("#")[1];
                         StickerConfirmation stc = new StickerConfirmation(App.getFrame());
                         Dimension frmSize = App.getFrame().getSize();
@@ -105,7 +112,9 @@ public class AgendaPanel extends JPanel {
                         EventsManager.removeSticker(id);
                         CurrentStorage.get().storeEventsManager();}
                         refresh(CurrentDate.get());
-					} else if (d.startsWith("memoranda:addsticker")) {
+					} 
+					
+					else if (d.startsWith("memoranda:addsticker")) {
 						StickerDialog dlg = new StickerDialog(App.getFrame());
 						Dimension frmSize = App.getFrame().getSize();
 						dlg.setSize(new Dimension(300,380));
@@ -115,6 +124,7 @@ public class AgendaPanel extends JPanel {
 								(frmSize.height - dlg.getSize().height) / 2
 								+ loc.y);
 						dlg.setVisible(true);
+						
 						if (!dlg.CANCELLED) {
 							String txt = dlg.getStickerText();
 							int sP = dlg.getPriority();
@@ -123,19 +133,26 @@ public class AgendaPanel extends JPanel {
 							EventsManager.createSticker(txt, sP);
 							CurrentStorage.get().storeEventsManager();
 						}
+						
 						refresh(CurrentDate.get());
-						System.out.println("agreguÃ© un sticker");
-					} else if (d.startsWith("memoranda:expandsubtasks")) {
+						System.out.println("agregué un sticker");
+					} 
+					
+					else if (d.startsWith("memoranda:expandsubtasks")) {
 						String id = d.split("#")[1];
 						gotoTask = id;
 						expandedTasks.add(id);
 						refresh(CurrentDate.get());
-					} else if (d.startsWith("memoranda:closesubtasks")) {
+					} 
+					
+					else if (d.startsWith("memoranda:closesubtasks")) {
 						String id = d.split("#")[1];
 						gotoTask = id;
 						expandedTasks.remove(id);
 						refresh(CurrentDate.get());
-					} else if (d.startsWith("memoranda:expandsticker")) {
+					} 
+					
+					else if (d.startsWith("memoranda:expandsticker")) {
 						String id = d.split("#")[1];
 						Element pre_sticker=(Element)((Map)EventsManager.getStickers()).get(id);
 						String sticker = pre_sticker.getValue();
@@ -157,7 +174,9 @@ public class AgendaPanel extends JPanel {
 								+ loc.y);
 						dlg.stickerText.setText(sticker);
 						dlg.setVisible(true);
-					}else if (d.startsWith("memoranda:editsticker")) {
+					}
+					
+					else if (d.startsWith("memoranda:editsticker")) {
 						String id = d.split("#")[1];
 						Element pre_sticker=(Element)((Map)EventsManager.getStickers()).get(id);
 						String sticker = pre_sticker.getValue();
@@ -179,6 +198,7 @@ public class AgendaPanel extends JPanel {
 						dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x,
 							 		(frmSize.height - dlg.getSize().height) / 2 + loc.y);
 						dlg.setVisible(true);
+						
 						if (!dlg.CANCELLED) {
 							String txt = dlg.getStickerText();
 							sP = dlg.getPriority();
@@ -189,21 +209,36 @@ public class AgendaPanel extends JPanel {
 							CurrentStorage.get().storeEventsManager();
 						 }
 						 refresh(CurrentDate.get());
-					}else if (d.startsWith("memoranda:exportstickerst")) {
-						 /*  Falta agregar el exportar sticker mientras tanto..*/
+					}
+					
+					// Create .txt export sticker
+					else if (d.startsWith("memoranda:exportstickerst")) {
 						 final JFrame parent = new JFrame();
-						 String name = JOptionPane.showInputDialog(parent,Local.getString("Ingrese nombre de archivo a exportar"),null);
-						 new ExportSticker(name).export("txt");
+						 // Changed Spanish export message to English
+						 // Ricky Lind 2/1/2016
+						 String name = JOptionPane.showInputDialog(parent,Local.getString("Enter file name to export as .txt"),null);
+						 //new ExportSticker(name).export("txt");
+						 new ImportSticker(name).export_file();
 						 //JOptionPane.showMessageDialog(null,name);
-					}else if (d.startsWith("memoranda:exportstickersh")) {
-						 /*  Falta agregar el exportar sticker mientras tanto..*/
+					}
+					
+					// Create .html export sticker
+					else if (d.startsWith("memoranda:exportstickersh")) {
 						 final JFrame parent = new JFrame();
-						 String name = JOptionPane.showInputDialog(parent,Local.getString("Ingrese nombre de archivo a exportar"),null);
-						 new ExportSticker(name).export("html");
+						 // Changed Spanish export message to English
+						 // Ricky Lind 2/1/2016
+						 String name = JOptionPane.showInputDialog(parent,Local.getString("Enter file name to export as .html"),null);
+						 //new ExportSticker(name).export("html");
+						 new ImportSticker(name).export_file();
 						 //JOptionPane.showMessageDialog(null,name);
-					}else if (d.startsWith("memoranda:importstickers")) {
+					}
+					
+					// Create a new import sticker
+					else if (d.startsWith("memoranda:importstickers")) {
 						final JFrame parent = new JFrame();
-						String name = JOptionPane.showInputDialog(parent,Local.getString("Ingrese nombre de archivo a importar"),null);
+						 // Changed Spanish import message to English
+						 // Ricky Lind 2/1/2016
+						String name = JOptionPane.showInputDialog(parent,Local.getString("Enter file name to import"),null);
 						new ImportSticker(name).import_file();
 					}
 				}

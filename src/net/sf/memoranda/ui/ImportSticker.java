@@ -9,19 +9,24 @@ public class ImportSticker {
 String name;        
         
         public ImportSticker(String x) {
-                name = x;
+        	name = x;
         }
 
-        public boolean import_file(){
-                /*
-                 We are working on this =)
-                  
-                  
-                  */
+        public boolean import_file() {
+        	/*
+            We are working on this =)
+             */
                 
-                JOptionPane.showMessageDialog(null,Local.getString("Aun no podemos importar su documento"));
-                return true;
+        	//Changed error message from Spanish to English
+        	//Ricky Lind 2/1/16
+            JOptionPane.showMessageDialog(null,Local.getString("Import Failed"));
+            return true;
         }
         
-        
+        public boolean export_file() {
+        	//Create an error message for the export buttons
+        	//Ricky Lind
+            JOptionPane.showMessageDialog(null,Local.getString("Export Failed"));
+            return true;
+        }
 }
