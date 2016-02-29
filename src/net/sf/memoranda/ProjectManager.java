@@ -8,6 +8,7 @@
  */
 package net.sf.memoranda;
 
+import java.util.Date;
 import java.util.Vector;
 
 import net.sf.memoranda.date.CalendarDate;
@@ -20,8 +21,9 @@ import nu.xom.Element;
 import nu.xom.Elements;
 
 /**
- *
+ * snesmith: updated to make a project countdown timer.
  */
+
 /*$Id: ProjectManager.java,v 1.9 2005/12/01 08:12:26 alexeya Exp $*/
 public class ProjectManager {
 //    public static final String NS_JNPROJECT = "http://www.openmechanics.org/2003/jnotes-projects-file";
@@ -110,7 +112,7 @@ public class ProjectManager {
         return prj;
     }
 
-    public static Project createProject(String title, CalendarDate startDate, CalendarDate endDate) {
+    public static Project createProject(String title, CalendarDate startDate, CalendarDate endDate, String end) {
         return createProject(Util.generateId(), title, startDate, endDate);
     }
     
